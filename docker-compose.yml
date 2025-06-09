@@ -21,6 +21,6 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - /home/pi/notoo:/mnt/notoo
-      - /home/pi/notoo/webhook-config.json:/etc/webhook/hooks.json
-    command: -hooks=/etc/webhook/hooks.json -verbose
+      - ./deploy.sh:/etc/webhook/deploy.sh
+      - ./webhook-config.json:/etc/webhook/hooks.json
+      - ./:/notoo
