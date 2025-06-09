@@ -1,0 +1,17 @@
+[
+  {
+    "id": "notoo-auto-deploy",
+    "execute-command": "/home/pi/notoo/deploy.sh",
+    "command-working-directory": "/home/pi/notoo",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "refs/heads/main",
+        "parameter": {
+          "source": "payload",
+          "name": "ref"
+        }
+      }
+    }
+  }
+]
