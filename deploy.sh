@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cd /home/pi/notoo
 echo "📦 Pulling latest code from GitHub..."
