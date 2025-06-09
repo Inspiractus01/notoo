@@ -1,6 +1,6 @@
 [
   {
-    "id": "deploy",
+    "id": "notoo-auto-deploy",
     "execute-command": "/scripts/deploy.sh",
     "command-working-directory": "/scripts",
     "trigger-rule": {
