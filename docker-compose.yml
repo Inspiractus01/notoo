@@ -18,7 +18,8 @@ services:
     restart: always
 
   webhook:
-    image: ghcr.io/inspiractus01/webhook:arm
+    build:
+      context: ./webhook/docker
     container_name: notoo-webhook
     volumes:
       - ./webhook/hooks.json:/etc/webhook/hooks.json
