@@ -1,8 +1,8 @@
 [
   {
     "id": "deploy",
-    "execute-command": "/home/pi/notoo/deploy.sh",
-    "command-working-directory": "/home/pi/notoo",
+    "execute-command": "/scripts/deploy.sh",
+    "command-working-directory": "/scripts",
     "trigger-rule": {
       "match": {
         "type": "value",

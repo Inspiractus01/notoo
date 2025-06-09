@@ -16,3 +16,14 @@ services:
     ports:
       - "3030:80"
     restart: always
+
+  webhook:
+    image: almir/webhook
+    container_name: notoo-webhook
+    volumes:
+      - ./webhook/hooks.json:/etc/webhook/hooks.json
+      - ./deploy.sh:/scripts/deploy.sh
+    command: -hooks /etc/webhook/hooks.json -port 9000 -verbose
+    ports:
+      - "9000:9000"
+    restart: always
