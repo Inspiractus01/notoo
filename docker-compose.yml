@@ -23,4 +23,5 @@ services:
     volumes:
       - /home/pi/notoo/deploy.sh:/etc/webhook/deploy.sh
       - /home/pi/notoo/webhook-config.json:/etc/webhook/hooks.json
+      - /var/run/docker.sock:/var/run/docker.sock
     command: -hooks=/etc/webhook/hooks.json -verbose

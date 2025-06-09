@@ -1,13 +1,9 @@
 #!/bin/sh
 
-cd /home/pi/notoo
-echo "📦 Pulling latest code from GitHub..."
-git pull origin main
+echo "📦 Deploy webhook spustený: $(date)" >> /tmp/deploy.log
+cd /home/pi/notoo || exit 1
 
-echo "🐳 Building Docker containers..."
-docker compose build
-
-echo "🚀 Starting containers..."
-docker compose up -d
-
-echo "✅ Deployment finished!"
+git pull origin main >> /tmp/deploy.log 2>&1
+docker compose build >> /tmp/deploy.log 2>&1
+docker compose up -d >> /tmp/deploy.log 2>&1
+echo "✅ Hotovo!" >> /tmp/deploy.log
