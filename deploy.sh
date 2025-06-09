@@ -1,13 +1,14 @@
-#!/bin/sh
-echo "Webhook triggered – deploying..."
+#!/bin/bash
 
-cd /notoo || exit
+cd /home/pi/notoo
 
-echo "Pulling latest code..."
+echo "[DEPLOY] Pulling latest changes..."
 git pull origin main
 
-echo "Restarting Docker containers..."
-docker compose down
-docker compose up --build -d
+echo "[DEPLOY] Building Docker containers..."
+docker-compose build
 
-echo "Deploy hotový ✅"
+echo "[DEPLOY] Restarting app..."
+docker-compose up -d
+
+echo "[DEPLOY] Done."

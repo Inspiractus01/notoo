@@ -7,6 +7,7 @@ services:
     container_name: notoo-backend
     ports:
       - "3000:3000"
+    restart: always
 
   frontend:
     build:
@@ -14,13 +15,4 @@ services:
     container_name: notoo-frontend
     ports:
       - "3030:80"
-
-  webhook:
-    image: almir/webhook
-    container_name: notoo-webhook
-    ports:
-      - "9000:9000"
-    volumes:
-      - ./deploy.sh:/etc/webhook/deploy.sh
-      - ./webhook-config.json:/etc/webhook/hooks.json
-      - ./:/notoo
+    restart: always

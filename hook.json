@@ -1,8 +1,8 @@
 [
   {
-    "id": "auto-deploy",
-    "execute-command": "/etc/webhook/deploy.sh",
-    "command-working-directory": "/project",
+    "id": "deploy",
+    "execute-command": "/home/pi/notoo/deploy.sh",
+    "command-working-directory": "/home/pi/notoo",
     "trigger-rule": {
       "match": {
         "type": "value",
