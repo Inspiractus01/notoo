@@ -6,10 +6,11 @@ const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
   db.run(`
-    CREATE TABLE IF NOT EXISTS notes (
+    CREATE TABLE IF NOT EXISTS plants (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      content TEXT NOT NULL,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      image TEXT,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     )
   `);

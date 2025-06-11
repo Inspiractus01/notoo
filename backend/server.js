@@ -1,5 +1,7 @@
 const express = require("express");
-const db = require("./database/database"); // napojenie na tvoju SQLite DB
+const db = require("./database/database");
+const plantRoutes = require("./routes/plants");
+
 const app = express();
 const PORT = 3000;
 
@@ -13,10 +15,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root route
 app.get("/", (req, res) => {
   res.send("Notoo backend is running ✅");
 });
 
+// Mount /plants routes
+app.use("/plants", plantRoutes);
+
+// Start server
 app.listen(PORT, () => {
   console.log(`✅ Notoo backend running at http://localhost:${PORT}`);
 });
