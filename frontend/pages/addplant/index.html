@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a New Plant – LeafLoop</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/add-plant.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <img src="/assets/logo.png" alt="LeafLoop logo" class="logo" />
+      <h1 class="title">LeafLoop</h1>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/pages/explore/index.html">Explore</a>
+        <a href="/pages/add-plant/index.html">+ Add Plant</a>
+      </nav>
+    </header>
+
+    <main class="add-plant-page">
+      <section class="form-section">
+        <h2>Add a New Plant</h2>
+        <form
+          id="add-plant-form"
+          action="http://localhost:3000/plants"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="name">Plant Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" required></textarea>
+
+          <label for="image">Upload Image:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            required
+          />
+
+          <button type="submit">Add Plant</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/pages/explore/index.html">Explore</a>
+        <a href="/pages/add-plant/index.html">+ Add Plant</a>
+      </nav>
+      <p>🌿 LeafLoop &copy; 2025 | Open-source plant encyclopedia</p>
+    </footer>
+  </body>
+</html>
