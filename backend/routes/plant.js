@@ -1,7 +1,23 @@
 const express = require("express");
 const db = require("../database/database");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
+
+// Set up upload directory and Multer
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) =>
+    cb(null, Date.now() + path.extname(file.originalname)),
+});
+const upload = multer({ storage });
 
 // Get all plants
 router.get("/", (req, res) => {
@@ -21,18 +37,23 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// Create a new plant
-router.post("/", (req, res) => {
-  const { name, description, image } = req.body;
-  if (!name || !description) {
-    return res.status(400).json({ error: "Name and description are required" });
+// Create a new plant with image upload
+router.post("/", upload.single("image"), (req, res) => {
+  const { name, description } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+  if (!name || !description || !imagePath) {
+    return res.status(400).json({ error: "All fields are required." });
   }
+
   db.run(
     "INSERT INTO plants (name, description, image) VALUES (?, ?, ?)",
-    [name, description, image || null],
+    [name, description, imagePath],
     function (err) {
       if (err) return res.status(500).json({ error: "Failed to add plant" });
-      res.status(201).json({ id: this.lastID });
+      res
+        .status(201)
+        .json({ id: this.lastID, name, description, image: imagePath });
     }
   );
 });
