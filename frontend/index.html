@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeafLoop – Plant Encyclopedia</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+
   <body>
+    <div class="navbar">
+      <img src="assets/logo.png" alt="LeafLoop logo" class="logo" />
+
+      <div class="navigation">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
+
     <main class="homepage">
-      <section class="intro">
-        <div class="text-content">
-          <h2>Your digital plant companion</h2>
-          <p class="slogan">Smart care, open knowledge, and plant discovery.</p>
-          <button onclick="location.href='/pages/explore/index.html'">
-            Explore Now
-          </button>
-          <p class="plant-count">
-            Already in our database: <span id="plant-count">0</span> plants 🍀
-          </p>
-        </div>
-        <div class="image-content">
-          <img src="assets/r1.jpg" alt="Random Plant" id="random-image" />
-        </div>
-      </section>
+      <div class="text-content">
+        <h2>Your digital plant companion</h2>
+        <p class="slogan">Smart care, open knowledge, and plant discovery.</p>
+        <button onclick="location.href='/pages/explore/index.html'">
+          Explore Now
+        </button>
+        <p class="plant-count">
+          Already in our database: <span id="plant-count">0</span> plants 🍀
+        </p>
+      </div>
     </main>
 
-    <script src="pages/home/home.js"></script>
     <footer class="footer">
       <nav>
-        <a href="index.html">Home</a>
-        <a href="pages/explore/index.html">Explore</a>
-        <a href="pages/add-plant/index.html">+ Add Plant</a>
+        <a href="/index.html">Home</a>
+        <a href="/pages/explore/index.html">Explore</a>
+        <a href="/pages/add-plant/index.html">+ Add Plant</a>
       </nav>
       <p>🌿 LeafLoop &copy; 2025 | Open-source plant encyclopedia</p>
     </footer>
