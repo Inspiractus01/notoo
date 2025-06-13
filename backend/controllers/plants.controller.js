@@ -8,13 +8,19 @@ import {
 
 export async function getAllPlants(req, res) {
   try {
+    const { search, category } = req.query;
+
+    if (search || category) {
+      const filtered = await searchPlantsFromDb({ search, category });
+      return res.json(filtered);
+    }
+
     const plants = await getAllPlantsFromDb();
     res.json(plants);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch plants" });
   }
 }
-
 export async function getPlantById(req, res) {
   try {
     const plant = await getPlantByIdFromDb(req.params.id);

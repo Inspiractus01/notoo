@@ -2,7 +2,10 @@ import { connectDb } from "../db/db.js";
 
 export async function getCommentsByPlantIdFromDb(plantId) {
   const db = await connectDb();
-  return await db.all("SELECT * FROM comments WHERE plantId = ?", plantId);
+  if (plantId) {
+    return await db.all("SELECT * FROM comments WHERE plantId = ?", plantId);
+  }
+  return await db.all("SELECT * FROM comments");
 }
 
 export async function getCommentByIdFromDb(id) {

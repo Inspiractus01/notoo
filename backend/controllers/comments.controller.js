@@ -8,7 +8,8 @@ import {
 
 export async function getCommentsByPlantId(req, res) {
   try {
-    const comments = await getCommentsByPlantIdFromDb(req.query.plantId);
+    const { plantId } = req.query;
+    const comments = await getCommentsByPlantIdFromDb(plantId);
     res.json(comments);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch comments" });

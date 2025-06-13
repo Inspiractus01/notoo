@@ -40,3 +40,25 @@ export async function deletePlantInDb(id) {
   const db = await connectDb();
   return await db.run("DELETE FROM plants WHERE id = ?", id);
 }
+export async function searchPlantsFromDb({ search, category }) {
+  const db = await connectDb();
+  let query = "SELECT * FROM plants";
+  const params = [];
+
+  if (search || category) {
+    query += " WHERE";
+    if (search) {
+      query += " name LIKE ?";
+      params.push(`%${search}%`);
+    }
+    if (search && category) {
+      query += " AND";
+    }
+    if (category) {
+      query += " category = ?";
+      params.push(category);
+    }
+  }
+
+  return await db.all(query, ...params);
+}
