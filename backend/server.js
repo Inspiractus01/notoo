@@ -1,29 +1,34 @@
-const express = require("express");
-const db = require("./database/database");
-const plantRoutes = require("./routes/plants");
+// server.js
+import express from "express";
+import cors from "cors";
+
+import plantsRoutes from "./routes/plants.routes.js";
+import commentsRoutes from "./routes/comments.routes.js";
+import usersRoutes from "./routes/users.routes.js";
+
+import { errorHandler } from "./utils/errorHandler.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
+// Middlewares
+app.use(cors());
 app.use(express.json());
 
-// CORS middleware
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// Routes
+app.use("/plants", plantsRoutes);
+app.use("/comments", commentsRoutes);
+app.use("/users", usersRoutes);
 
-// Root route
+// Root endpoint
 app.get("/", (req, res) => {
-  res.send("Notoo backend is running ✅");
+  res.send("🌱 Welcome to the Plant Wiki API!");
 });
 
-// Mount /plants routes
-app.use("/plants", plantRoutes);
+// Error handler
+app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Notoo backend running at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
