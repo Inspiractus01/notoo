@@ -7,6 +7,12 @@ import {
   searchPlantsFromDb,
 } from "../data/plants.handler.js";
 
+/**
+ * Retrieves all plants or filtered plants by search and/or category.
+ *
+ * @param {import("express").Request} req - Express request object
+ * @param {import("express").Response} res - Express response object
+ */
 export async function getAllPlants(req, res) {
   try {
     const { search, category } = req.query;
@@ -22,6 +28,13 @@ export async function getAllPlants(req, res) {
     res.status(500).json({ error: "Failed to fetch plants" });
   }
 }
+
+/**
+ * Retrieves a plant by its ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function getPlantById(req, res) {
   try {
     const plant = await getPlantByIdFromDb(req.params.id);
@@ -32,6 +45,12 @@ export async function getPlantById(req, res) {
   }
 }
 
+/**
+ * Creates a new plant in the database.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function createPlant(req, res) {
   try {
     const { name, description, category } = req.body;
@@ -43,6 +62,12 @@ export async function createPlant(req, res) {
   }
 }
 
+/**
+ * Updates an existing plant by ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function updatePlant(req, res) {
   try {
     const updated = await updatePlantInDb(req.params.id, req.body);
@@ -53,6 +78,12 @@ export async function updatePlant(req, res) {
   }
 }
 
+/**
+ * Deletes a plant by its ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function deletePlant(req, res) {
   try {
     await deletePlantInDb(req.params.id);

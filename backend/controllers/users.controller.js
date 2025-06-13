@@ -6,6 +6,12 @@ import {
   deleteUserInDb,
 } from "../data/users.handler.js";
 
+/**
+ * Retrieves all users from the database.
+ *
+ * @param {import("express").Request} req - Express request object
+ * @param {import("express").Response} res - Express response object
+ */
 export async function getAllUsers(req, res) {
   try {
     const users = await getAllUsersFromDb();
@@ -15,6 +21,12 @@ export async function getAllUsers(req, res) {
   }
 }
 
+/**
+ * Retrieves a user by ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function getUserById(req, res) {
   try {
     const user = await getUserByIdFromDb(req.params.id);
@@ -25,6 +37,12 @@ export async function getUserById(req, res) {
   }
 }
 
+/**
+ * Creates a new user in the database.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function createUser(req, res) {
   try {
     const { name, email } = req.body;
@@ -38,6 +56,12 @@ export async function createUser(req, res) {
   }
 }
 
+/**
+ * Updates an existing user by ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function updateUser(req, res) {
   try {
     const updated = await updateUserInDb(req.params.id, req.body);
@@ -48,6 +72,12 @@ export async function updateUser(req, res) {
   }
 }
 
+/**
+ * Deletes a user from the database by ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function deleteUser(req, res) {
   try {
     await deleteUserInDb(req.params.id);

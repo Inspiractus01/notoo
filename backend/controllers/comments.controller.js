@@ -6,6 +6,13 @@ import {
   deleteCommentInDb,
 } from "../data/comments.handler.js";
 
+/**
+ * Retrieves comments from the database.
+ * If a plantId is provided as a query param, only comments for that plant are returned.
+ *
+ * @param {import("express").Request} req - Express request object
+ * @param {import("express").Response} res - Express response object
+ */
 export async function getCommentsByPlantId(req, res) {
   try {
     const { plantId } = req.query;
@@ -16,6 +23,12 @@ export async function getCommentsByPlantId(req, res) {
   }
 }
 
+/**
+ * Retrieves a single comment by its ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function getCommentById(req, res) {
   try {
     const comment = await getCommentByIdFromDb(req.params.id);
@@ -26,6 +39,12 @@ export async function getCommentById(req, res) {
   }
 }
 
+/**
+ * Creates a new comment.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function createComment(req, res) {
   try {
     const { plantId, userId, content } = req.body;
@@ -39,6 +58,12 @@ export async function createComment(req, res) {
   }
 }
 
+/**
+ * Updates an existing comment.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function updateComment(req, res) {
   try {
     const updated = await updateCommentInDb(req.params.id, req.body.content);
@@ -48,6 +73,12 @@ export async function updateComment(req, res) {
   }
 }
 
+/**
+ * Deletes a comment by its ID.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
 export async function deleteComment(req, res) {
   try {
     await deleteCommentInDb(req.params.id);
