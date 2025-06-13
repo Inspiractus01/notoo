@@ -4,6 +4,7 @@ import {
   createPlantInDb,
   updatePlantInDb,
   deletePlantInDb,
+  searchPlantsFromDb,
 } from "../data/plants.handler.js";
 
 export async function getAllPlants(req, res) {
