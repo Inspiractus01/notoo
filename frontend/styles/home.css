@@ -90,8 +90,64 @@
   font-size: 2.2rem;
   color: #00d96e;
 }
-@media (max-width: 768px) {
+
+@media (max-width: 1200px) {
   .homepage {
     min-height: 85vh;
   }
+}
+/* Reusable dark section style */
+.dark-section {
+  background-color: #363434;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+/* How it works section styled like explore */
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-it-works h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.step {
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  max-width: 250px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.step span {
+  display: inline-block;
+  font-size: 2rem;
+  background: #00d96e;
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  line-height: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.how-it-works-summary {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #00d96e;
 }
