@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Explore – LeafLoop</title>
     <link rel="stylesheet" href="../../styles/globals.css" />
+    <script src="../../scripts/explore.js" defer></script>
   </head>
   <body>
     <header>
@@ -31,6 +32,13 @@
           and contribute. The LeafLoop plant encyclopedia is made by plant
           lovers – just like you.
         </p>
+        <div class="search-wrapper">
+          <input type="text" id="search" placeholder="Search by name..." />
+        </div>
+
+        <div id="plant-list" class="plant-grid">
+          <!-- Fetched plants will appear here -->
+        </div>
       </div>
     </main>
 
