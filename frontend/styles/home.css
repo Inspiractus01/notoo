@@ -69,3 +69,13 @@
   height: 100vh;
   color: white;
 }
+.plant-counter {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+#plant-count {
+  font-size: 2.2rem;
+  color: #00d96e;
+}
