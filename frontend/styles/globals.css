@@ -202,3 +202,7 @@ h1 {
   font-weight: bold;
   border-bottom: 2px solid #ffffff;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}
