@@ -46,22 +46,32 @@ export async function getPlantByIdFromDb(id) {
  * Creates a new plant entry in the database.
  *
  * @param {Object} data - The plant data.
- * @param {string} data.name - The name of the plant.
+ * @param {string} data.name - The name of the plant (required).
  * @param {string} [data.description] - Optional description of the plant.
  * @param {string} [data.category] - Optional category of the plant.
- * @returns {Promise<Object>} The newly created plant.
+ * @param {string} [data.image] - Optional image URL or path.
+ * @param {string} [data.basic_needs] - Optional basic care instructions or requirements.
+ * @returns {Promise<Object>} The newly created plant object from the database.
  */
-export async function createPlantInDb({ name, description, category }) {
+export async function createPlantInDb({
+  name,
+  description,
+  category,
+  image,
+  basic_needs,
+}) {
   const db = await connectDb();
   const result = await db.run(
-    "INSERT INTO plants (name, description, category) VALUES (?, ?, ?)",
+    `INSERT INTO plants (name, description, category, image, basic_needs) 
+     VALUES (?, ?, ?, ?, ?)`,
     name,
     description || "",
-    category || ""
+    category || "",
+    image || "",
+    basic_needs || ""
   );
   return await db.get("SELECT * FROM plants WHERE id = ?", result.lastID);
 }
-
 /**
  * Updates an existing plant in the database.
  *

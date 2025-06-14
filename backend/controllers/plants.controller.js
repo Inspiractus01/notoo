@@ -58,7 +58,6 @@ export async function getPlantById(req, res) {
     res.status(500).json({ error: "Failed to fetch plant" });
   }
 }
-
 /**
  * Creates a new plant in the database.
  *
@@ -67,15 +66,23 @@ export async function getPlantById(req, res) {
  */
 export async function createPlant(req, res) {
   try {
-    const { name, description, category } = req.body;
+    const { name, description, category, image, basic_needs } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
-    const plant = await createPlantInDb({ name, description, category });
+
+    const plant = await createPlantInDb({
+      name,
+      description,
+      category,
+      image,
+      basic_needs,
+    });
+
     res.status(201).json(plant);
   } catch (err) {
+    console.error("createPlant error:", err);
     res.status(500).json({ error: "Failed to create plant" });
   }
 }
-
 /**
  * Updates an existing plant by ID.
  *
@@ -84,14 +91,23 @@ export async function createPlant(req, res) {
  */
 export async function updatePlant(req, res) {
   try {
-    const updated = await updatePlantInDb(req.params.id, req.body);
+    const { name, description, category, image, basic_needs } = req.body;
+
+    const updated = await updatePlantInDb(req.params.id, {
+      name,
+      description,
+      category,
+      image,
+      basic_needs,
+    });
+
     if (!updated) return res.status(404).json({ error: "Plant not found" });
     res.json(updated);
   } catch (err) {
+    console.error("updatePlant error:", err);
     res.status(500).json({ error: "Failed to update plant" });
   }
 }
-
 /**
  * Deletes a plant by its ID.
  *
