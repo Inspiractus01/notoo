@@ -27,7 +27,9 @@ export const connectDb = async () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       description TEXT,
-      category TEXT
+      category TEXT,
+      image TEXT,
+      basic_needs TEXT
     );
 
     CREATE TABLE IF NOT EXISTS comments (
