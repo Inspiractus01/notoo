@@ -33,12 +33,23 @@
   margin: 10px 0;
 }
 .text-content h1 {
-  font-size: clamp(2rem, 6vw, 7rem);
-  line-height: clamp(2.5rem, 6.5vw, 5rem);
-  letter-spacing: clamp(-2px, -0.5vw, -10px);
-  font-weight: 800;
-  text-align: left;
+  letter-spacing: var(--font-home--title-letter-spacing);
   margin: 0;
+  font-size: var(--font-home-title-size);
+  line-height: var(--font-home-title-line-height);
+  font-weight: 800;
+  color: var(--color-text-black);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInTitle 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation-delay: 0.2s;
+}
+@keyframes fadeInTitle {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .text-content p {
@@ -78,4 +89,9 @@
 #plant-count {
   font-size: 2.2rem;
   color: #00d96e;
+}
+@media (max-width: 768px) {
+  .homepage {
+    min-height: 85vh;
+  }
 }

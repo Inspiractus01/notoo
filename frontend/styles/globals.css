@@ -1,19 +1,74 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&display=swap");
 @import url("./home.css");
 
 * {
   box-sizing: border-box;
 }
+:root {
+  --font-primary: "Roboto Mono", monospace;
+  --font-secondary: "EB Garamond", serif;
 
+  --font-size-base: 1rem; /* default font size */
+  --font-size-heading: 2.5rem; /* main headings */
+
+  --color-text: #ffffff;
+  --color-text-black: #000000;
+  --color-text-secondary: #b0b0b0;
+  --color-background: #2ab96b;
+  /* Hero Title*/
+  --font-home-title-size: 8rem;
+  --font-home--title-letter-spacing: -0.3rem;
+  letter-spacing: clamp(-2px, -0.5vw, -10px);
+
+  --font-home-title-line-height: 9rem;
+}
+@media (max-width: 2000px) {
+  :root {
+    --font-home-title-size: 6rem;
+    --font-home-title-line-height: 6.2rem;
+  }
+}
+
+@media (max-width: 1600px) {
+  :root {
+    --font-home-title-size: 5rem;
+    --font-home-title-line-height: 5.2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --font-home-title-size: 5rem;
+    --font-home-title-line-height: 4.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-home-title-size: 4rem;
+    --font-home-title-line-height: 4.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --font-home-title-size: 2.5rem;
+    --font-home-title-line-height: 3rem;
+  }
+}
 html,
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  font-family: "Roboto Mono", monospace;
-  background-color: #2ab96b;
+  background-color: var(--color-background);
   display: flex;
   flex-direction: column;
+  /*Fonts in body*/
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  background-color: var(--color-background);
 }
 
 header {
@@ -24,6 +79,7 @@ header {
 }
 
 h1 {
+  letter-spacing: normal;
   font-size: 5rem;
   text-align: center;
   margin: 0;
