@@ -6,6 +6,7 @@
     <title>LeafLoop – Plant Encyclopedia</title>
     <link rel="stylesheet" href="styles/globals.css" />
     <script src="scripts/home.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
   </head>
   <body>
     <header>
@@ -15,6 +16,45 @@
           <a href="pages/about/index.html">About</a>
           <a href="pages/explore/index.html">Explore</a>
           <a href="pages/add-plant/index.html">Add Plant</a>
+          <button id="auth-button" class="auth-btn">Login / Register</button>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-modal" class="close">&times;</span>
+
+          <div id="form-toggle">
+            <button id="show-login">Login</button>
+            <button id="show-register">Register</button>
+          </div>
+
+          <form id="login-form" class="auth-form">
+            <h3>Login</h3>
+            <input type="text" id="login-name" placeholder="Name" required />
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit">Login</button>
+          </form>
+
+          <form id="register-form" class="auth-form hidden">
+            <h3>Register</h3>
+            <input type="text" id="register-name" placeholder="Name" required />
+            <input
+              type="password"
+              id="register-password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit">Register</button>
+          </form>
+
+          <p id="auth-message"></p>
         </div>
       </div>
     </header>
