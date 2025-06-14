@@ -6,6 +6,8 @@ import {
   deletePlantInDb,
   searchPlantsFromDb,
   getPlantCountFromDb,
+  getAllCategoriesFromDb,
+  getUniqueCategoriesFromDb,
 } from "../data/plants.handler.js";
 /**
  * Retrieves all plants with optional search, category filter and pagination.
@@ -102,5 +104,33 @@ export async function deletePlant(req, res) {
     res.json({ message: `Plant ${req.params.id} deleted` });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete plant" });
+  }
+}
+/**
+ * Retrieves all unique plant categories from the database.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getAllCategories(req, res) {
+  try {
+    const categories = await getAllCategoriesFromDb();
+    res.json(categories);
+  } catch (err) {
+    console.error("getAllCategories error:", err);
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
+}
+/**
+ * Returns a list of unique categories
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getPlantCategories(req, res) {
+  try {
+    const categories = await getUniqueCategoriesFromDb();
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch categories" });
   }
 }

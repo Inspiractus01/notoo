@@ -128,3 +128,22 @@ export async function searchPlantsFromDb({ search, category }) {
 
   return await db.all(query, ...params);
 }
+/**
+ * Retrieves all unique plant categories from the database.
+ *
+ * @returns {Promise<string[]>} Array of unique category names.
+ */
+export async function getAllCategoriesFromDb() {
+  const db = await connectDb();
+  const rows = await db.all(
+    "SELECT DISTINCT category FROM plants WHERE category IS NOT NULL AND category != ''"
+  );
+  return rows.map((row) => row.category);
+}
+export async function getUniqueCategoriesFromDb() {
+  const db = await connectDb();
+  const rows = await db.all(
+    "SELECT DISTINCT category FROM plants WHERE category IS NOT NULL AND category != ''"
+  );
+  return rows.map((row) => row.category);
+}
