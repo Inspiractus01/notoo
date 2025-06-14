@@ -22,19 +22,30 @@ export async function getUserByIdFromDb(id) {
 }
 
 /**
+ * Retrieves a user by their name from the database (used for login).
+ *
+ * @param {string} name - The user's name.
+ * @returns {Promise<Object|null>} The user object or null if not found.
+ */
+export async function getUserByNameFromDb(name) {
+  const db = await connectDb();
+  return await db.get("SELECT * FROM users WHERE name = ?", name);
+}
+
+/**
  * Creates a new user in the database.
  *
  * @param {Object} data - User data.
  * @param {string} data.name - The user's name.
- * @param {string} data.email - The user's email address.
+ * @param {string} data.password - The user's password.
  * @returns {Promise<Object>} The newly created user.
  */
-export async function createUserInDb({ name, email }) {
+export async function createUserInDb({ name, password }) {
   const db = await connectDb();
   const result = await db.run(
-    "INSERT INTO users (name, email) VALUES (?, ?)",
+    "INSERT INTO users (name, password) VALUES (?, ?)",
     name,
-    email
+    password
   );
   return await db.get("SELECT * FROM users WHERE id = ?", result.lastID);
 }
@@ -45,18 +56,18 @@ export async function createUserInDb({ name, email }) {
  * @param {number|string} id - The ID of the user to update.
  * @param {Object} data - New user data.
  * @param {string} [data.name] - New name (optional).
- * @param {string} [data.email] - New email (optional).
- * @returns {Promise<Object|null>} The updated user or null if user was not found.
+ * @param {string} [data.password] - New password (optional).
+ * @returns {Promise<Object|null>} The updated user or null if not found.
  */
-export async function updateUserInDb(id, { name, email }) {
+export async function updateUserInDb(id, { name, password }) {
   const db = await connectDb();
   const existing = await db.get("SELECT * FROM users WHERE id = ?", id);
   if (!existing) return null;
 
   await db.run(
-    "UPDATE users SET name = ?, email = ? WHERE id = ?",
+    "UPDATE users SET name = ?, password = ? WHERE id = ?",
     name || existing.name,
-    email || existing.email,
+    password || existing.password,
     id
   );
   return await db.get("SELECT * FROM users WHERE id = ?", id);

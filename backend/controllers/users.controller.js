@@ -4,6 +4,7 @@ import {
   createUserInDb,
   updateUserInDb,
   deleteUserInDb,
+  getUserByNameFromDb,
 } from "../data/users.handler.js";
 
 /**
@@ -45,11 +46,11 @@ export async function getUserById(req, res) {
  */
 export async function createUser(req, res) {
   try {
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ error: "Name and email required" });
+    const { name, password } = req.body;
+    if (!name || !password) {
+      return res.status(400).json({ error: "Name and password required" });
     }
-    const user = await createUserInDb({ name, email });
+    const user = await createUserInDb({ name, password });
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ error: "Failed to create user" });
@@ -84,5 +85,29 @@ export async function deleteUser(req, res) {
     res.json({ message: `User ${req.params.id} deleted` });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete user" });
+  }
+}
+
+/**
+ * Logs in a user by name and password.
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function loginUser(req, res) {
+  try {
+    const { name, password } = req.body;
+    if (!name || !password) {
+      return res.status(400).json({ error: "Name and password required" });
+    }
+
+    const user = await getUserByNameFromDb(name);
+    if (!user || user.password !== password) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    res.json({ message: "Login successful", userId: user.id, name: user.name });
+  } catch (err) {
+    res.status(500).json({ error: "Login failed" });
   }
 }
