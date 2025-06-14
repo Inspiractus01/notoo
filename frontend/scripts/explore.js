@@ -1,33 +1,20 @@
-/**
- * Handles plant listing logic on the Explore page.
- *
- * - Always shows the "Load more" button
- * - Displays 20 plants per page (5x4 grid)
- * - Supports search by name
- * - Loads next page on button click
- * - Fetches paginated data from backend API
- *
- * Backend endpoint: http://localhost:3000/plants?_page=1&_limit=20
- */
-
 document.addEventListener("DOMContentLoaded", () => {
   const plantListEl = document.getElementById("plant-list");
   const searchInput = document.getElementById("search");
   const loadMoreBtn = document.getElementById("load-more");
+  const categoryWrapper = document.getElementById("category-chips");
 
-  /** @constant {number} Number of items per page */
   const ITEMS_PER_PAGE = 15;
 
-  /** @type {number} Current page number (starts at 1) */
   let currentPage = 1;
-
-  /** @type {string} Current search query */
   let currentQuery = "";
+  let currentCategory = "";
 
-  // Initial load
+  // Inicializácia
   fetchPlants();
+  fetchCategories();
 
-  // Handle input in search bar
+  // Vyhľadávanie podľa názvu
   searchInput.addEventListener("input", () => {
     currentQuery = searchInput.value.toLowerCase().trim();
     currentPage = 1;
@@ -41,13 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchPlants();
   });
 
-  /**
-   * Fetches plant data from backend API and renders them
-   */
+  // Načítanie rastlín
   function fetchPlants() {
     let url = `http://localhost:3000/plants?_page=${currentPage}&_limit=${ITEMS_PER_PAGE}`;
     if (currentQuery) {
       url += `&search=${encodeURIComponent(currentQuery)}`;
+    }
+    if (currentCategory) {
+      url += `&category=${encodeURIComponent(currentCategory)}`;
     }
 
     fetch(url)
@@ -65,10 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  /**
-   * Renders given list of plants into the UI
-   * @param {Object[]} plants
-   */
+  // Vykresli rastliny do UI
   function renderPlants(plants) {
     plants.forEach((plant) => {
       const card = document.createElement("div");
@@ -79,6 +64,55 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>${plant.description || ""}</p>
       `;
       plantListEl.appendChild(card);
+    });
+  }
+
+  // Načítanie kategórií
+  function fetchCategories() {
+    fetch("http://localhost:3000/plants/categories")
+      .then((res) => res.json())
+      .then((categories) => {
+        renderCategoryChips(categories);
+      })
+      .catch((err) => console.error("Error fetching categories:", err));
+  }
+
+  // Vykreslenie chipov
+  function renderCategoryChips(categories) {
+    // Chip "All"
+    const allChip = document.createElement("div");
+    allChip.className = "chip active";
+    allChip.innerText = "All";
+    allChip.addEventListener("click", () => {
+      currentCategory = "";
+      currentPage = 1;
+      plantListEl.innerHTML = "";
+      document
+        .querySelectorAll(".chip")
+        .forEach((c) => c.classList.remove("active"));
+      allChip.classList.add("active");
+      fetchPlants();
+    });
+    categoryWrapper.appendChild(allChip);
+
+    // Ostatné kategórie
+    categories.forEach((cat) => {
+      const chip = document.createElement("div");
+      chip.className = "chip";
+      chip.innerText = cat;
+
+      chip.addEventListener("click", () => {
+        currentCategory = cat;
+        currentPage = 1;
+        plantListEl.innerHTML = "";
+        document
+          .querySelectorAll(".chip")
+          .forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        fetchPlants();
+      });
+
+      categoryWrapper.appendChild(chip);
     });
   }
 });

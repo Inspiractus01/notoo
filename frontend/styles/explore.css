@@ -38,6 +38,12 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+.plant-card p {
+  font-size: var(--font-size-primary);
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: var(--color-text-secondary);
+}
 
 .plant-card.fade-in {
   opacity: 1;
@@ -116,4 +122,28 @@ main.greenpage {
   min-height: 100vh;
   padding-bottom: 6rem;
   box-sizing: border-box;
+}
+.chip-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.chip {
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-text-secondary);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chip:hover,
+.chip.active {
+  background-color: white;
+  color: black;
 }
