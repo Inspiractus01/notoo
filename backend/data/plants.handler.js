@@ -1,15 +1,36 @@
 import { connectDb } from "../db/db.js";
 
 /**
- * Retrieves all plants from the database.
+ * Retrieves plants with optional pagination support.
  *
- * @returns {Promise<Object[]>} Array of all plant objects.
+ * @param {Object} options
+ * @param {number} [options.limit] - Number of items to return.
+ * @param {number} [options.offset] - Number of items to skip.
+ * @returns {Promise<Object[]>} Array of plant objects.
  */
-export async function getAllPlantsFromDb() {
+export async function getAllPlantsFromDb({ limit, offset } = {}) {
   const db = await connectDb();
-  return await db.all("SELECT * FROM plants");
-}
 
+  let query = "SELECT * FROM plants";
+  const params = [];
+
+  if (typeof limit === "number") {
+    query += " LIMIT ?";
+    params.push(limit);
+
+    if (typeof offset === "number") {
+      query += " OFFSET ?";
+      params.push(offset);
+    }
+  }
+
+  return await db.all(query, ...params);
+}
+export async function getPlantCountFromDb() {
+  const db = await connectDb();
+  const result = await db.get("SELECT COUNT(*) as count FROM plants");
+  return result.count;
+}
 /**
  * Retrieves a plant by its ID.
  *
