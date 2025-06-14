@@ -78,6 +78,13 @@ header {
   z-index: 999;
 }
 
+p {
+  letter-spacing: normal;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--color-text);
+  margin: 0;
+}
 h1 {
   letter-spacing: normal;
   font-size: 5rem;

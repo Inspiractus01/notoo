@@ -124,30 +124,47 @@
   flex-wrap: wrap;
   margin-bottom: 2rem;
 }
-
+/* Zväčši boxy v HOW IT WORKS */
 .step {
   background-color: #4a4a4a;
   color: white;
-  border-radius: 10px;
-  padding: 1rem;
-  max-width: 250px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 300px;
+  min-height: 220px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .step span {
-  display: inline-block;
-  font-size: 2rem;
-  background: #00d96e;
-  color: white;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  line-height: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+  margin-bottom: 1rem;
 }
 
-.how-it-works-summary {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #00d96e;
+/* Nový zelený info blok pre Explore */
+.explore-section {
+  background-color: #2ab96b; /* Zelený odtieň */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: white;
+  text-align: center;
+  height: 40vh;
+}
+
+.explore-section h2 {
+  font-size: 2.3rem;
+  margin-bottom: 1rem;
+}
+
+.explore-section p {
+  font-size: 1.1rem;
+  max-width: 600px;
 }
