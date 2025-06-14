@@ -49,32 +49,30 @@
   transform: scale(0.95);
 }
 
-/* Hover efekt pre plant-card */
 .plant-card:hover {
   transform: scale(1.08);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Tlačidlo Load more */
+/* Load more */
 .load-more-btn {
   display: block;
   margin: 2rem auto;
   padding: 0.7rem 2rem;
   font-size: 1rem;
-  border: 2px solid #888;
+  border: none;
   border-radius: 8px;
-  background-color: #aaa;
+  background-color: var(--color-text-secondary);
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .load-more-btn:hover {
-  background-color: #888;
+  background-color: white;
+  color: black;
 }
-.load-more-btn {
-  border: 2px solid #2e7d32;
-}
+
 .plant-chip {
   display: inline-block;
   padding: 0.5rem 1rem;
