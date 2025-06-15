@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import {
   getAllPlantsFromDb,
   getPlantByIdFromDb,
@@ -10,12 +12,6 @@ import {
   getUniqueCategoriesFromDb,
 } from "../data/plants.handler.js";
 
-/**
- * Retrieves all plants with optional search, category filter and pagination.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function getAllPlants(req, res) {
   try {
     const { search, category, _limit, _page } = req.query;
@@ -44,12 +40,6 @@ export async function getAllPlants(req, res) {
   }
 }
 
-/**
- * Retrieves a plant by its ID.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function getPlantById(req, res) {
   try {
     const plant = await getPlantByIdFromDb(req.params.id);
@@ -60,12 +50,6 @@ export async function getPlantById(req, res) {
   }
 }
 
-/**
- * Creates a new plant in the database.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function createPlant(req, res) {
   try {
     const { name, description, category, image, basic_needs } = req.body;
@@ -86,12 +70,6 @@ export async function createPlant(req, res) {
   }
 }
 
-/**
- * Updates an existing plant by ID.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function updatePlant(req, res) {
   try {
     const { name, description, category, image, basic_needs } = req.body;
@@ -112,12 +90,6 @@ export async function updatePlant(req, res) {
   }
 }
 
-/**
- * Deletes a plant by its ID.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function deletePlant(req, res) {
   try {
     await deletePlantInDb(req.params.id);
@@ -127,12 +99,6 @@ export async function deletePlant(req, res) {
   }
 }
 
-/**
- * Retrieves all unique plant categories from the database.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function getAllCategories(req, res) {
   try {
     const categories = await getAllCategoriesFromDb();
@@ -143,17 +109,53 @@ export async function getAllCategories(req, res) {
   }
 }
 
-/**
- * Returns a list of unique categories.
- *
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export async function getPlantCategories(req, res) {
   try {
     const categories = await getUniqueCategoriesFromDb();
     res.json(categories);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch categories" });
+  }
+}
+
+// ✅ New: Upload plant image
+export async function uploadPlantImage(req, res) {
+  try {
+    const id = req.params.id;
+    const plant = await getPlantByIdFromDb(id);
+    if (!plant) return res.status(404).json({ error: "Plant not found" });
+
+    // Delete old image file if it exists
+    if (plant.image) {
+      const oldPath = path.join("db/media", path.basename(plant.image));
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
+
+    const imagePath = `/db/media/${req.file.filename}`;
+    const updated = await updatePlantInDb(id, { image: imagePath });
+
+    res.json(updated);
+  } catch (err) {
+    console.error("uploadPlantImage error:", err);
+    res.status(500).json({ error: "Failed to upload image" });
+  }
+}
+
+export async function deletePlantImage(req, res) {
+  try {
+    const id = req.params.id;
+    const plant = await getPlantByIdFromDb(id);
+    if (!plant) return res.status(404).json({ error: "Plant not found" });
+
+    if (plant.image) {
+      const imagePath = path.join("db/media", path.basename(plant.image));
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    }
+
+    const updated = await updatePlantInDb(id, { image: "" });
+    res.json(updated);
+  } catch (err) {
+    console.error("deletePlantImage error:", err);
+    res.status(500).json({ error: "Failed to delete image" });
   }
 }

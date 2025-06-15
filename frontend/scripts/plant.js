@@ -1,5 +1,3 @@
-// scripts/plant.js
-
 const API = "http://localhost:3000/plants";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -16,9 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch(`${API}/${id}`);
     if (!res.ok) throw new Error("Plant not found");
-
     const plant = await res.json();
 
+    // Fill detail view
     document.getElementById("plant-name").textContent = plant.name;
     document.getElementById("plant-description").textContent =
       plant.description || "N/A";
@@ -28,17 +26,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       plant.basic_needs || "N/A";
 
     const imageEl = document.getElementById("plant-image");
-    if (plant.image) {
-      imageEl.src = plant.image;
-      imageEl.alt = plant.name;
-    } else {
-      imageEl.src = "../../assets/profile/profile-variant1.png";
-      imageEl.alt = "Default plant image";
-    }
-    imageEl.style.width = "200px";
-    imageEl.style.height = "200px";
-    imageEl.style.borderRadius = "12px";
-    imageEl.style.objectFit = "cover";
+    imageEl.src = plant.image || "../../assets/profile/profile-variant1.png";
+    imageEl.alt = plant.name || "Default plant image";
 
     const editBtn = document.getElementById("edit-plant-button");
     const modal = document.getElementById("edit-plant-modal");
@@ -59,38 +48,61 @@ document.addEventListener("DOMContentLoaded", async () => {
       modal.classList.add("hidden");
     });
 
+    // Handle Save
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const updated = {
         description: document.getElementById("edit-description").value,
         category: document.getElementById("edit-category").value,
         basic_needs: document.getElementById("edit-basic-needs").value,
         image: document.getElementById("edit-image-url").value,
       };
-      try {
-        const res = await fetch(`${API}/${id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updated),
+
+      const fileInput = document.getElementById("edit-image-file");
+      const file = fileInput.files[0];
+
+      // Update base info first
+      const updateRes = await fetch(`${API}/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
+      });
+
+      if (!updateRes.ok) return alert("Failed to update plant.");
+
+      // Upload image if selected
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+        await fetch(`${API}/${id}/images`, {
+          method: "POST",
+          body: formData,
         });
-        if (res.ok) {
-          window.location.reload();
-        } else {
-          alert("Failed to update plant.");
-        }
-      } catch (err) {
-        console.error("Update error:", err);
-        alert("Update failed.");
+        if (!uploadRes.ok) return alert("Image upload failed.");
       }
+
+      window.location.reload();
     });
 
+    // Delete image
     const deleteImageBtn = document.getElementById("delete-image-button");
-    deleteImageBtn.addEventListener("click", () => {
-      document.getElementById("edit-image-url").value = "";
+    deleteImageBtn.addEventListener("click", async () => {
+      const confirmed = confirm("Are you sure you want to delete the image?");
+      if (!confirmed) return;
+
+      const delRes = await fetch(`${API}/${id}/images`, {
+        method: "DELETE",
+      });
+      if (delRes.ok) {
+        document.getElementById("edit-image-url").value = "";
+        alert("Image deleted. Don't forget to save.");
+      } else {
+        alert("Failed to delete image.");
+      }
     });
   } catch (err) {
     console.error("Fetch error:", err);
-    document.getElementById("plant-detail").innerHTML =
-      "<p>⚠️ Failed to load plant data.</p>";
+    detailBox.innerHTML = "<p>⚠️ Failed to load plant data.</p>";
   }
 });
