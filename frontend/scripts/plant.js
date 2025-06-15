@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       imageEl.src = "../../assets/profile/profile-variant1.png";
       imageEl.alt = "Default plant image";
     }
+    imageEl.style.width = "200px";
+    imageEl.style.height = "200px";
+    imageEl.style.borderRadius = "12px";
+    imageEl.style.objectFit = "cover";
   } catch (err) {
     console.error("Fetch error:", err);
     document.getElementById("plant-detail").innerHTML =
