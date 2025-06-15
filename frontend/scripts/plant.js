@@ -3,7 +3,6 @@ const API = "http://localhost:3000/plants";
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
-
   const detailBox = document.getElementById("plant-detail");
 
   if (!id) {
@@ -14,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch(`${API}/${id}`);
     if (!res.ok) throw new Error("Plant not found");
+
     const plant = await res.json();
 
     // Fill detail view
@@ -26,9 +26,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       plant.basic_needs || "N/A";
 
     const imageEl = document.getElementById("plant-image");
-    imageEl.src = plant.image || "../../assets/profile/profile-variant1.png";
-    imageEl.alt = plant.name || "Default plant image";
 
+    // ✅ Correct image path handling
+    if (plant.image && plant.image.startsWith("/db/media")) {
+      imageEl.src = `http://localhost:3000${plant.image}`;
+    } else if (plant.image) {
+      imageEl.src = plant.image;
+    } else {
+      imageEl.src = "../../assets/profile/profile-variant1.png";
+    }
+
+    imageEl.onerror = () => {
+      imageEl.src = "../../assets/profile/profile-variant1.png";
+    };
+
+    // Edit modal logic
     const editBtn = document.getElementById("edit-plant-button");
     const modal = document.getElementById("edit-plant-modal");
     const closeModal = document.getElementById("close-edit-modal");
@@ -48,7 +60,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       modal.classList.add("hidden");
     });
 
-    // Handle Save
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -62,30 +73,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       const fileInput = document.getElementById("edit-image-file");
       const file = fileInput.files[0];
 
-      // Update base info first
       const updateRes = await fetch(`${API}/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updated),
       });
 
-      if (!updateRes.ok) return alert("Failed to update plant.");
+      if (!updateRes.ok) {
+        alert("Failed to update plant.");
+        return;
+      }
 
-      // Upload image if selected
+      // ✅ Fix: uploadRes neexistoval, pridávam správne
       if (file) {
         const formData = new FormData();
         formData.append("image", file);
-        await fetch(`${API}/${id}/images`, {
+
+        const uploadRes = await fetch(`${API}/${id}/images`, {
           method: "POST",
           body: formData,
         });
-        if (!uploadRes.ok) return alert("Image upload failed.");
+
+        if (!uploadRes.ok) {
+          alert("Image upload failed.");
+          return;
+        }
       }
 
       window.location.reload();
     });
 
-    // Delete image
     const deleteImageBtn = document.getElementById("delete-image-button");
     deleteImageBtn.addEventListener("click", async () => {
       const confirmed = confirm("Are you sure you want to delete the image?");
@@ -94,6 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const delRes = await fetch(`${API}/${id}/images`, {
         method: "DELETE",
       });
+
       if (delRes.ok) {
         document.getElementById("edit-image-url").value = "";
         alert("Image deleted. Don't forget to save.");
