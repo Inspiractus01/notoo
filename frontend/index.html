@@ -11,12 +11,18 @@
   <body>
     <header>
       <div class="navbar">
-        <div class="navbar-title">LeafLoop</div>
+        <a href="index.html" class="navbar-title">LeafLoop</a>
         <div class="navigation">
           <a href="pages/about/index.html">About</a>
           <a href="pages/explore/index.html">Explore</a>
           <a href="pages/add-plant/index.html">Add Plant</a>
           <button id="auth-button" class="auth-btn">Login / Register</button>
+          <img
+            id="profile-avatar"
+            class="profile-avatar hidden"
+            src="assets/profile/profile-variant1.png"
+            alt="Profile"
+          />
         </div>
       </div>
 
@@ -55,6 +61,46 @@
           </form>
 
           <p id="auth-message"></p>
+        </div>
+      </div>
+      <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-profile-modal" class="close">&times;</span>
+          <h3>Edit Profile</h3>
+
+          <div class="avatar-options">
+            <p>Select avatar:</p>
+            <div class="avatar-selection">
+              <img
+                src="assets/profile/profile-male.png"
+                data-avatar="1"
+                class="avatar-choice"
+              />
+              <img
+                src="assets/profile/profile-female.png"
+                data-avatar="2"
+                class="avatar-choice"
+              />
+              <img
+                src="assets/profile/profile-variant1.png"
+                data-avatar="3"
+                class="avatar-choice"
+              />
+            </div>
+          </div>
+
+          <form id="password-form">
+            <p>Change password:</p>
+            <input
+              type="password"
+              id="new-password"
+              placeholder="New password"
+              required
+            />
+            <button type="submit">Update Password</button>
+          </form>
+
+          <button id="logout-button" class="logout-btn">Logout</button>
         </div>
       </div>
     </header>

@@ -157,6 +157,9 @@ h1 {
   color: white;
   text-decoration: none;
   font-size: 1rem;
+  display: flex;
+  align-self: center;
+  justify-content: center;
 }
 
 .footer {
@@ -271,4 +274,44 @@ a {
 .auth-btn:hover {
   background-color: white;
   color: #2ab96b;
+}
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 50%; /* tvoj border radius efekt */
+  margin-left: 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+.avatar-selection {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.avatar-choice {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.avatar-choice:hover {
+  border-color: #2ab96b;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
 }
