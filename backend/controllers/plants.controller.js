@@ -9,6 +9,7 @@ import {
   getAllCategoriesFromDb,
   getUniqueCategoriesFromDb,
 } from "../data/plants.handler.js";
+
 /**
  * Retrieves all plants with optional search, category filter and pagination.
  *
@@ -58,6 +59,7 @@ export async function getPlantById(req, res) {
     res.status(500).json({ error: "Failed to fetch plant" });
   }
 }
+
 /**
  * Creates a new plant in the database.
  *
@@ -83,6 +85,7 @@ export async function createPlant(req, res) {
     res.status(500).json({ error: "Failed to create plant" });
   }
 }
+
 /**
  * Updates an existing plant by ID.
  *
@@ -108,6 +111,7 @@ export async function updatePlant(req, res) {
     res.status(500).json({ error: "Failed to update plant" });
   }
 }
+
 /**
  * Deletes a plant by its ID.
  *
@@ -122,6 +126,7 @@ export async function deletePlant(req, res) {
     res.status(500).json({ error: "Failed to delete plant" });
   }
 }
+
 /**
  * Retrieves all unique plant categories from the database.
  *
@@ -137,8 +142,10 @@ export async function getAllCategories(req, res) {
     res.status(500).json({ error: "Failed to fetch categories" });
   }
 }
+
 /**
- * Returns a list of unique categories
+ * Returns a list of unique categories.
+ *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  */

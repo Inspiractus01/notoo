@@ -26,11 +26,13 @@ export async function getAllPlantsFromDb({ limit, offset } = {}) {
 
   return await db.all(query, ...params);
 }
+
 export async function getPlantCountFromDb() {
   const db = await connectDb();
   const result = await db.get("SELECT COUNT(*) as count FROM plants");
   return result.count;
 }
+
 /**
  * Retrieves a plant by its ID.
  *
@@ -72,6 +74,7 @@ export async function createPlantInDb({
   );
   return await db.get("SELECT * FROM plants WHERE id = ?", result.lastID);
 }
+
 /**
  * Updates an existing plant in the database.
  *
@@ -80,6 +83,8 @@ export async function createPlantInDb({
  * @param {string} [data.name] - New name (optional).
  * @param {string} [data.description] - New description (optional).
  * @param {string} [data.category] - New category (optional).
+ * @param {string} [data.image] - New image URL (optional).
+ * @param {string} [data.basic_needs] - New care instructions (optional).
  * @returns {Promise<Object|null>} The updated plant object or null if not found.
  */
 export async function updatePlantInDb(id, data) {
@@ -87,13 +92,26 @@ export async function updatePlantInDb(id, data) {
   const existing = await db.get("SELECT * FROM plants WHERE id = ?", id);
   if (!existing) return null;
 
+  const updated = {
+    name: data.name ?? existing.name,
+    description: data.description ?? existing.description,
+    category: data.category ?? existing.category,
+    image: data.image ?? existing.image,
+    basic_needs: data.basic_needs ?? existing.basic_needs,
+  };
+
   await db.run(
-    "UPDATE plants SET name = ?, description = ?, category = ? WHERE id = ?",
-    data.name || existing.name,
-    data.description || existing.description,
-    data.category || existing.category,
+    `UPDATE plants
+     SET name = ?, description = ?, category = ?, image = ?, basic_needs = ?
+     WHERE id = ?`,
+    updated.name,
+    updated.description,
+    updated.category,
+    updated.image,
+    updated.basic_needs,
     id
   );
+
   return await db.get("SELECT * FROM plants WHERE id = ?", id);
 }
 
@@ -138,6 +156,7 @@ export async function searchPlantsFromDb({ search, category }) {
 
   return await db.all(query, ...params);
 }
+
 /**
  * Retrieves all unique plant categories from the database.
  *
@@ -150,6 +169,7 @@ export async function getAllCategoriesFromDb() {
   );
   return rows.map((row) => row.category);
 }
+
 export async function getUniqueCategoriesFromDb() {
   const db = await connectDb();
   const rows = await db.all(

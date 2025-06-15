@@ -9,6 +9,7 @@ import {
 } from "../controllers/plants.controller.js";
 
 const router = express.Router();
+router.patch("/:id", updatePlant); // PATCH /plants/:id - Partial update
 router.get("/categories", getPlantCategories); // GET /plants/categories - Retrieve all unique plant categories
 router.get("/", getAllPlants); // GET /plants
 router.get("/:id", getPlantById); // GET /plants/:id
