@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
+    // Načítanie detailov rastliny
     const res = await fetch(`${API}/${id}`);
     if (!res.ok) throw new Error("Plant not found");
-
     const plant = await res.json();
 
-    // Fill plant detail view
+    // Vyplnenie detailov rastliny
     document.getElementById("plant-name").textContent = plant.name;
     document.getElementById("plant-description").textContent =
       plant.description || "N/A";
@@ -37,6 +37,108 @@ document.addEventListener("DOMContentLoaded", async () => {
     imageEl.onerror = () => {
       imageEl.src = "../../assets/profile/profile-variant1.png";
     };
+
+    // --- EDIT MODAL ---
+    const editBtn = document.getElementById("edit-plant-button");
+    const modal = document.getElementById("edit-plant-modal");
+    const closeModal = document.getElementById("close-edit-modal");
+    const form = document.getElementById("edit-plant-form");
+
+    editBtn.addEventListener("click", () => {
+      document.getElementById("edit-description").value =
+        plant.description || "";
+      document.getElementById("edit-category").value = plant.category || "";
+      document.getElementById("edit-basic-needs").value =
+        plant.basic_needs || "";
+      document.getElementById("edit-image-url").value = plant.image || "";
+      modal.classList.remove("hidden");
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const updated = {
+        description: document.getElementById("edit-description").value,
+        category: document.getElementById("edit-category").value,
+        basic_needs: document.getElementById("edit-basic-needs").value,
+        image: document.getElementById("edit-image-url").value,
+      };
+
+      const fileInput = document.getElementById("edit-image-file");
+      const file = fileInput.files[0];
+
+      const updateRes = await fetch(`${API}/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
+      });
+
+      if (!updateRes.ok) {
+        alert("Failed to update plant.");
+        return;
+      }
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const uploadRes = await fetch(`${API}/${id}/images`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          alert("Image upload failed.");
+          return;
+        }
+      }
+
+      modal.classList.add("hidden");
+      window.location.reload();
+    });
+
+    // --- DELETE IMAGE ---
+    const deleteImageBtn = document.getElementById("delete-image-button");
+    deleteImageBtn.addEventListener("click", async () => {
+      const confirmed = confirm("Are you sure you want to delete the image?");
+      if (!confirmed) return;
+
+      const delRes = await fetch(`${API}/${id}/images`, {
+        method: "DELETE",
+      });
+
+      if (delRes.ok) {
+        document.getElementById("edit-image-url").value = "";
+        alert("Image deleted. Don't forget to save.");
+      } else {
+        alert("Failed to delete image.");
+      }
+    });
+
+    // --- DELETE PLANT ---
+    const deletePlantBtn = document.getElementById("delete-plant-button");
+    deletePlantBtn.addEventListener("click", async () => {
+      const confirmed = confirm("Are you sure you want to delete this plant?");
+      if (!confirmed) return;
+
+      try {
+        const deleteRes = await fetch(`${API}/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!deleteRes.ok) throw new Error("Delete failed");
+
+        alert("Plant deleted successfully.");
+        window.location.href = "../explore/index.html";
+      } catch (error) {
+        alert("Failed to delete plant.");
+        console.error("Delete plant error:", error);
+      }
+    });
 
     // --- KOMENTÁRE ---
     const commentList = document.getElementById("comment-list");
@@ -73,9 +175,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(`${COMMENT_API}?plantId=${id}`);
         if (!res.ok) throw new Error("Failed to fetch comments");
         const comments = await res.json();
-
-        // DEBUG: Skontroluj dáta v konzole
-        console.log("Comments loaded:", comments);
 
         commentList.innerHTML = comments
           .map(
