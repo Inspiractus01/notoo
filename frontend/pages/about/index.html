@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About – LeafLoop</title>
     <link rel="stylesheet" href="../../styles/globals.css" />
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("HTML loaded");
+      });
+    </script>
     <script src="../../scripts/auth.js" defer></script>
   </head>
   <body>
@@ -19,7 +24,7 @@
           <img
             id="profile-avatar"
             class="profile-avatar hidden"
-            src="/assets/profile/profile-variant1.png"
+            src="../../assets/profile/profile-variant1.png"
             alt="Profile"
           />
           <span id="user-name" class="user-name hidden"></span>
@@ -30,7 +35,6 @@
       <div id="auth-modal" class="modal hidden">
         <div class="modal-content">
           <span id="close-modal" class="close">&times;</span>
-
           <div id="form-toggle">
             <button class="button" id="show-login">Login</button>
             <button class="button" id="show-register">Register</button>
@@ -81,6 +85,9 @@
         <div class="modal-content">
           <span id="close-profile-modal" class="close">&times;</span>
           <h2>Edit Profile</h2>
+          <p id="logged-user-text" class="logged-user-text">
+            You are logged in as ...
+          </p>
 
           <div class="avatar-options">
             <h4>Change profile picture:</h4>
@@ -130,13 +137,7 @@
         <h2>🌿 How it works</h2>
         <p>
           Any user can create an account and start contributing to the database
-          of plants. You can add your favorite plant species, describe their
-          basic care needs, and even upload your own plant photos.
-        </p>
-
-        <p>
-          Once you're logged in, you can leave comments under plant entries —
-          ask questions, share care tips, or connect with other plant lovers.
+          of plants...
         </p>
 
         <h2>🌍 Why use LeafLoop?</h2>
@@ -153,8 +154,7 @@
         <h2>👤 Ready to join?</h2>
         <p>
           Just click <strong>Register</strong> in the top right corner to get
-          started! Whether you're a seasoned plant expert or just getting
-          started, LeafLoop welcomes you.
+          started!
         </p>
       </div>
     </main>
