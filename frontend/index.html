@@ -25,6 +25,7 @@
             src="assets/profile/profile-variant1.png"
             alt="Profile"
           />
+          <span id="user-name" class="user-name hidden"></span>
         </div>
       </div>
 
@@ -39,7 +40,6 @@
           </div>
 
           <!-- LOGIN FORM -->
-
           <form id="login-form" class="auth-form">
             <p for="login-name">Name</p>
             <input
@@ -78,25 +78,19 @@
             <button type="submit">Register</button>
           </form>
 
-          <form id="register-form" class="auth-form hidden">
-            <h3>Register</h3>
-            <input type="text" id="register-name" placeholder="Name" required />
-            <input
-              type="password"
-              id="register-password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Register</button>
-          </form>
-
           <p id="auth-message"></p>
         </div>
       </div>
+
+      <!-- Profile Modal -->
       <div id="profile-modal" class="modal hidden">
         <div class="modal-content">
           <span id="close-profile-modal" class="close">&times;</span>
           <h2>Edit Profile</h2>
+
+          <p id="logged-user-text" class="logged-user-text">
+            You are logged in as ...
+          </p>
 
           <div class="avatar-options">
             <h4>Change profile picture:</h4>
@@ -167,6 +161,7 @@
         </p>
       </div>
     </section>
+
     <div class="explore-section">
       <div class="explore-content">
         <h2>Explore Plants</h2>
@@ -178,9 +173,7 @@
         </p>
         <p>
           Our plant entries are continuously updated by users just like you —
-          making LeafLoop a living, collaborative encyclopedia. Learn how to
-          nurture your houseplants, find the right conditions for growth, and
-          share your own plant knowledge.
+          making LeafLoop a living, collaborative encyclopedia.
         </p>
       </div>
       <section class="explore-section">

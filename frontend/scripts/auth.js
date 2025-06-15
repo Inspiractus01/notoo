@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("auth-modal");
   const authButton = document.getElementById("auth-button");
   const profileAvatar = document.getElementById("profile-avatar");
+  const userNameSpan = document.getElementById("user-name");
   const closeModal = document.getElementById("close-modal");
 
   const showLoginBtn = document.getElementById("show-login");
@@ -16,8 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeProfileModal = document.getElementById("close-profile-modal");
   const passwordForm = document.getElementById("password-form");
   const logoutButton = document.getElementById("logout-button");
+  const loggedUserText = document.getElementById("logged-user-text");
 
-  // Helper: convert avatar number to filename
+  const profilePath = window.location.pathname.includes("/pages/")
+    ? "../../assets/profile"
+    : "assets/profile";
+
   function getAvatarFile(avatarNum) {
     switch (avatarNum) {
       case 1:
@@ -29,26 +34,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Check if user is logged in
+  // If user is logged in, show profile
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
   if (loggedUser) {
     authButton.classList.add("hidden");
-    profileAvatar.src = `assets/profile/${getAvatarFile(loggedUser.avatar)}`;
+    profileAvatar.src = `${profilePath}/${getAvatarFile(loggedUser.avatar)}`;
     profileAvatar.classList.remove("hidden");
+    userNameSpan.textContent = loggedUser.name;
+    userNameSpan.classList.remove("hidden");
+    if (loggedUserText) {
+      loggedUserText.textContent = `You are logged in as ${loggedUser.name}`;
+    }
   }
 
-  // Open auth modal
-  authButton.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-  });
-
-  // Close auth modal
+  // Modal toggles
+  authButton.addEventListener("click", () => modal.classList.remove("hidden"));
   closeModal.addEventListener("click", () => {
     modal.classList.add("hidden");
     message.textContent = "";
   });
 
-  // Toggle login/register forms
   showLoginBtn.addEventListener("click", () => {
     loginForm.classList.remove("hidden");
     registerForm.classList.add("hidden");
@@ -61,10 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
     message.textContent = "";
   });
 
-  // Registration
+  // Register
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const name = document.getElementById("register-name").value.trim();
     const password = document.getElementById("register-password").value.trim();
 
@@ -77,9 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, password, avatar: 3 }), // default avatar
+        body: JSON.stringify({ name, password, avatar: 3 }),
       });
-
       const data = await res.json();
 
       if (!res.ok) {
@@ -98,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Login
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const name = document.getElementById("login-name").value.trim();
     const password = document.getElementById("login-password").value.trim();
 
@@ -113,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, password }),
       });
-
       const data = await res.json();
 
       if (!res.ok) {
@@ -124,8 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("loggedInUser", JSON.stringify(data));
       message.textContent = `Welcome back, ${data.name}!`;
       authButton.classList.add("hidden");
-      profileAvatar.src = `assets/profile/${getAvatarFile(data.avatar)}`;
+      profileAvatar.src = `${profilePath}/${getAvatarFile(data.avatar)}`;
       profileAvatar.classList.remove("hidden");
+      userNameSpan.textContent = data.name;
+      userNameSpan.classList.remove("hidden");
+      if (loggedUserText) {
+        loggedUserText.textContent = `You are logged in as ${data.name}`;
+      }
       loginForm.reset();
       modal.classList.add("hidden");
     } catch (err) {
@@ -134,18 +140,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === Profile Modal ===
-
-  // Open profile modal
+  // Profile modal toggle
   profileAvatar.addEventListener("click", () => {
     profileModal.classList.remove("hidden");
   });
-
-  // Close profile modal
   closeProfileModal.addEventListener("click", () => {
     profileModal.classList.add("hidden");
   });
-
+  // Open profile modal when clicking on username
+  userNameSpan.addEventListener("click", () => {
+    profileModal.classList.remove("hidden");
+  });
   // Change avatar
   document.querySelectorAll(".avatar-choice").forEach((img) => {
     img.addEventListener("click", async () => {
@@ -160,12 +165,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (res.ok) {
         user.avatar = newAvatar;
         localStorage.setItem("loggedInUser", JSON.stringify(user));
-        profileAvatar.src = `assets/profile/${getAvatarFile(newAvatar)}`;
+        profileAvatar.src = `${profilePath}/${getAvatarFile(newAvatar)}`;
       }
     });
   });
 
-  // Password change
+  // Change password
   passwordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const newPassword = document.getElementById("new-password").value.trim();

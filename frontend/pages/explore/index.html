@@ -1,3 +1,4 @@
+<!-- Ulož ako pages/explore/index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,38 +14,57 @@
       <div class="navbar">
         <a href="../../index.html" class="navbar-title">LeafLoop</a>
         <div class="navigation">
-          <a href="pages/about/index.html">About</a>
-          <a href="pages/explore/index.html">Explore</a>
-          <a href="pages/add-plant/index.html">Add Plant</a>
-          <button id="auth-button" class="auth-btn">Login / Register</button>
+          <a href="../about/index.html">About</a>
+          <a href="../explore/index.html" class="active">Explore</a>
+          <a href="../add-plant/index.html">Add Plant</a>
+          <button id="auth-button" class="button">Login / Register</button>
+          <img
+            id="profile-avatar"
+            class="profile-avatar hidden"
+            src="/assets/profile/profile-variant1.png"
+            alt="Profile"
+          />
+          <span id="user-name" class="user-name hidden"></span>
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Login/Register Modal -->
       <div id="auth-modal" class="modal hidden">
         <div class="modal-content">
           <span id="close-modal" class="close">&times;</span>
 
           <div id="form-toggle">
-            <button id="show-login">Login</button>
-            <button id="show-register">Register</button>
+            <button class="button" id="show-login">Login</button>
+            <button class="button" id="show-register">Register</button>
           </div>
 
           <form id="login-form" class="auth-form">
-            <h3>Login</h3>
-            <input type="text" id="login-name" placeholder="Name" required />
+            <p for="login-name">Name</p>
+            <input
+              type="text"
+              id="login-name"
+              placeholder="Your name"
+              required
+            />
+            <p for="login-password">Password</p>
             <input
               type="password"
               id="login-password"
-              placeholder="Password"
+              placeholder="Your password"
               required
             />
             <button type="submit">Login</button>
           </form>
 
           <form id="register-form" class="auth-form hidden">
-            <h3>Register</h3>
-            <input type="text" id="register-name" placeholder="Name" required />
+            <p for="register-name">Choose a name</p>
+            <input
+              type="text"
+              id="register-name"
+              placeholder="Your name"
+              required
+            />
+            <p for="register-password">Create a password</p>
             <input
               type="password"
               id="register-password"
@@ -55,6 +75,48 @@
           </form>
 
           <p id="auth-message"></p>
+        </div>
+      </div>
+
+      <!-- Profile Modal -->
+      <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-profile-modal" class="close">&times;</span>
+          <h2>Edit Profile</h2>
+
+          <div class="avatar-options">
+            <h4>Change profile picture:</h4>
+            <div class="avatar-selection">
+              <img
+                src="../../assets/profile/profile-male.png"
+                data-avatar="1"
+                class="avatar-choice"
+              />
+              <img
+                src="../../assets/profile/profile-female.png"
+                data-avatar="2"
+                class="avatar-choice"
+              />
+              <img
+                src="../../assets/profile/profile-variant1.png"
+                data-avatar="3"
+                class="avatar-choice"
+              />
+            </div>
+          </div>
+
+          <form id="password-form">
+            <h4>Change password:</h4>
+            <input
+              type="password"
+              id="new-password"
+              placeholder="New password"
+              required
+            />
+            <button class="button" type="submit">Update Password</button>
+          </form>
+
+          <button id="logout-button" class="logout-btn">Logout</button>
         </div>
       </div>
     </header>
@@ -68,9 +130,9 @@
           place to find your next favorite plant companion.
         </p>
         <p>
-          Use the navigation or filter tools (coming soon) to discover, learn,
-          and contribute. The LeafLoop plant encyclopedia is made by plant
-          lovers – just like you.
+          Use the navigation or filter tools to discover, learn, and contribute.
+          The LeafLoop plant encyclopedia is made by plant lovers – just like
+          you.
         </p>
         <div class="search-wrapper">
           <input type="text" id="search" placeholder="Search by name..." />

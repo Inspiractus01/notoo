@@ -370,3 +370,14 @@ a {
   margin-top: 1rem;
   width: 100%;
 }
+.user-name {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  color: white;
+  align-self: center;
+}
+.profile-avatar:hover {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+}
