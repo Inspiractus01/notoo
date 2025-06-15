@@ -15,4 +15,4 @@ services:
       - "8080:80"
     restart: always
     extra_hosts:
-      - "localhost:172.67.207.66"
+      - "localhost:api.michalmucha.me"
