@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // If user is logged in, show profile
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
   if (loggedUser) {
     authButton.classList.add("hidden");
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Modal toggles
   authButton.addEventListener("click", () => modal.classList.remove("hidden"));
   closeModal.addEventListener("click", () => {
     modal.classList.add("hidden");
@@ -66,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     message.textContent = "";
   });
 
-  // Register
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = document.getElementById("register-name").value.trim();
@@ -98,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Login
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = document.getElementById("login-name").value.trim();
@@ -140,18 +136,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Profile modal toggle
   profileAvatar.addEventListener("click", () => {
     profileModal.classList.remove("hidden");
   });
   closeProfileModal.addEventListener("click", () => {
     profileModal.classList.add("hidden");
   });
-  // Open profile modal when clicking on username
   userNameSpan.addEventListener("click", () => {
     profileModal.classList.remove("hidden");
   });
-  // Change avatar
+
   document.querySelectorAll(".avatar-choice").forEach((img) => {
     img.addEventListener("click", async () => {
       const newAvatar = parseInt(img.dataset.avatar);
@@ -170,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Change password
   passwordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const newPassword = document.getElementById("new-password").value.trim();
@@ -189,9 +182,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Logout
   logoutButton.addEventListener("click", () => {
     localStorage.removeItem("loggedInUser");
     location.reload();
+  });
+
+  // CREATE delete account button below password form
+  const deleteButton = document.createElement("button");
+  deleteButton.id = "delete-account-button";
+  deleteButton.textContent = "Delete Account";
+  deleteButton.classList.add("button");
+  deleteButton.style.marginTop = "1rem";
+  deleteButton.style.backgroundColor = "#e74c3c";
+
+  passwordForm.insertAdjacentElement("afterend", deleteButton);
+
+  deleteButton.addEventListener("click", async () => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) return;
+
+    const confirmDelete = confirm(
+      "Are you sure you want to delete your account?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/users/${user.userId}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        alert("Account deleted.");
+        localStorage.removeItem("loggedInUser");
+        location.reload();
+      } else {
+        alert("Failed to delete account.");
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Error deleting account.");
+    }
   });
 });

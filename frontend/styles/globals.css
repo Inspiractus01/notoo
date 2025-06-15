@@ -383,3 +383,16 @@ a {
   transform: scale(1.15);
   transition: transform 0.2s ease;
 }
+.danger-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.danger-btn:hover {
+  background-color: #cc0000;
+}
