@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const imageEl = document.getElementById("plant-image");
 
-    // ✅ Correct image path handling
     if (plant.image && plant.image.startsWith("/db/media")) {
       imageEl.src = `http://localhost:3000${plant.image}`;
     } else if (plant.image) {
@@ -84,7 +83,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      // ✅ Fix: uploadRes neexistoval, pridávam správne
       if (file) {
         const formData = new FormData();
         formData.append("image", file);
@@ -117,6 +115,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Image deleted. Don't forget to save.");
       } else {
         alert("Failed to delete image.");
+      }
+    });
+
+    // ✅ DELETE PLANT HANDLER – musí byť TU, lebo tu máme `id`
+    const deletePlantBtn = document.getElementById("delete-plant-button");
+    deletePlantBtn.addEventListener("click", async () => {
+      const confirmed = confirm("Are you sure you want to delete this plant?");
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`${API}/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!res.ok) throw new Error("Delete failed");
+
+        alert("Plant deleted successfully.");
+        window.location.href = "../explore/index.html";
+      } catch (err) {
+        console.error("Delete error:", err);
+        alert("Failed to delete plant.");
       }
     });
   } catch (err) {

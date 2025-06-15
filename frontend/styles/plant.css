@@ -6,3 +6,11 @@
   border-radius: 12px;
   object-fit: contain;
 }
+.danger-btn {
+  background-color: #d9534f;
+  color: white;
+}
+
+.danger-btn:hover {
+  background-color: #c9302c;
+}
