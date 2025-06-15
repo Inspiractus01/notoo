@@ -77,12 +77,12 @@
 }
 .explore-section {
   max-width: 1600px;
-  background-color: #363434;
+  background-color: #2ab96b;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   color: white;
 }
 .plant-counter {
@@ -147,19 +147,6 @@
   margin-bottom: 1rem;
 }
 
-.explore-section {
-  display: flex;
-  justify-content: center;
-  background-color: #2ab96b;
-  flex-direction: column;
-  padding: 4rem 2rem;
-  color: white;
-  height: 40vh;
-  max-width: 1600px;
-  width: 100%;
-  margin: auto;
-}
-
 .explore-section h2 {
   font-size: 2.3rem;
   margin-bottom: 1rem;
@@ -182,8 +169,19 @@
   transition: background-color 0.3s ease, color 0.3s ease;
   display: inline-block;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
-
+.explore-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.explore-title h2 {
+  margin: 0;
+  font-size: 1rem;
+}
 .explore-button:hover {
   background-color: white;
   color: #2ab96b;

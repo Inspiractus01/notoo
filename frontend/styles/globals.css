@@ -46,7 +46,7 @@
 
 @media (max-width: 1200px) {
   .h2 {
-    font-size: 2rem;
+    font-size: 1rem;
   }
   .p {
     font-size: 0.5rem;
@@ -59,7 +59,7 @@
 
 @media (max-width: 768px) {
   .h2 {
-    font-size: 2rem;
+    font-size: 1rem;
   }
   .p {
     font-size: 0.5rem;
