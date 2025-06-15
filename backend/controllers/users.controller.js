@@ -46,11 +46,11 @@ export async function getUserById(req, res) {
  */
 export async function createUser(req, res) {
   try {
-    const { name, password } = req.body;
+    const { name, password, avatarId } = req.body;
     if (!name || !password) {
       return res.status(400).json({ error: "Name and password required" });
     }
-    const user = await createUserInDb({ name, password });
+    const user = await createUserInDb({ name, password, avatarId });
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ error: "Failed to create user" });
@@ -106,7 +106,12 @@ export async function loginUser(req, res) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    res.json({ message: "Login successful", userId: user.id, name: user.name });
+    res.json({
+      message: "Login successful",
+      userId: user.id,
+      name: user.name,
+      avatarId: user.avatarId || 0,
+    });
   } catch (err) {
     res.status(500).json({ error: "Login failed" });
   }

@@ -38,14 +38,16 @@ export async function getUserByNameFromDb(name) {
  * @param {Object} data - User data.
  * @param {string} data.name - The user's name.
  * @param {string} data.password - The user's password.
+ * @param {number} [data.avatarId] - The user's avatar ID (optional).
  * @returns {Promise<Object>} The newly created user.
  */
-export async function createUserInDb({ name, password }) {
+export async function createUserInDb({ name, password, avatarId = null }) {
   const db = await connectDb();
   const result = await db.run(
-    "INSERT INTO users (name, password) VALUES (?, ?)",
+    "INSERT INTO users (name, password, avatarId) VALUES (?, ?, ?)",
     name,
-    password
+    password,
+    avatarId
   );
   return await db.get("SELECT * FROM users WHERE id = ?", result.lastID);
 }
@@ -57,17 +59,19 @@ export async function createUserInDb({ name, password }) {
  * @param {Object} data - New user data.
  * @param {string} [data.name] - New name (optional).
  * @param {string} [data.password] - New password (optional).
+ * @param {number} [data.avatarId] - New avatar ID (optional).
  * @returns {Promise<Object|null>} The updated user or null if not found.
  */
-export async function updateUserInDb(id, { name, password }) {
+export async function updateUserInDb(id, { name, password, avatarId }) {
   const db = await connectDb();
   const existing = await db.get("SELECT * FROM users WHERE id = ?", id);
   if (!existing) return null;
 
   await db.run(
-    "UPDATE users SET name = ?, password = ? WHERE id = ?",
+    "UPDATE users SET name = ?, password = ?, avatarId = ? WHERE id = ?",
     name || existing.name,
     password || existing.password,
+    avatarId !== undefined ? avatarId : existing.avatarId,
     id
   );
   return await db.get("SELECT * FROM users WHERE id = ?", id);

@@ -20,7 +20,8 @@ export const connectDb = async () => {
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL
+      password TEXT NOT NULL,
+      avatarId INTEGER DEFAULT 1
     );
 
     CREATE TABLE IF NOT EXISTS plants (
