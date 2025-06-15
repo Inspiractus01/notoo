@@ -75,16 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "plant-card fade-in";
 
       card.innerHTML = `
-        <a href="../plant/index.html?id=${plant.id}" class="plant-link">
-          <h3>${plant.name}</h3>
-          <p><strong>Category:</strong> ${plant.category || "N/A"}</p>
-          <p>${plant.description || ""}</p>
-        </a>
-      `;
+      <a href="../plant/index.html?id=${plant.id}" class="plant-link">
+        <h3>${plant.name}</h3>
+      </a>
+    `;
       plantListEl.appendChild(card);
     });
   }
-
   /**
    * Fetches all available plant categories from the API and renders filter chips.
    */
