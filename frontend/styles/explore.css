@@ -147,3 +147,47 @@ main.greenpage {
   background-color: white;
   color: black;
 }
+
+.plant-detail-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-top: 3rem;
+}
+
+.plant-text-section {
+  flex: 2;
+  min-width: 280px;
+}
+
+.plant-text-section h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.2rem;
+  color: #18914a;
+}
+
+.plant-text-section p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  color: #333;
+}
+
+.plant-field {
+  margin-bottom: 1.8rem;
+}
+
+.plant-image-section {
+  flex: 1;
+  min-width: 250px;
+}
+
+.plant-image-section .plant-image {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}

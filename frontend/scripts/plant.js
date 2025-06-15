@@ -19,20 +19,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const plant = await res.json();
 
-    detailBox.innerHTML = `
-      <h1>${plant.name}</h1>
-      ${
-        plant.image
-          ? `<img src="${plant.image}" alt="${plant.name}" class="plant-image" />`
-          : "<p><em>No image provided.</em></p>"
-      }
-      <p><strong>Description:</strong> ${plant.description || "N/A"}</p>
-      <p><strong>Category:</strong> ${plant.category || "N/A"}</p>
-      <p><strong>Basic Needs:</strong> ${plant.basic_needs || "N/A"}</p>
-      <a href="../explore/index.html" class="explore-button">← Back to Explore</a>
-    `;
+    document.getElementById("plant-name").textContent = plant.name;
+    document.getElementById("plant-description").textContent =
+      plant.description || "N/A";
+    document.getElementById("plant-category").textContent =
+      plant.category || "N/A";
+    document.getElementById("plant-basic-needs").textContent =
+      plant.basic_needs || "N/A";
+
+    const imageEl = document.getElementById("plant-image");
+    if (plant.image) {
+      imageEl.src = plant.image;
+      imageEl.alt = plant.name;
+    } else {
+      imageEl.src = "../../assets/profile/profile-variant1.png";
+      imageEl.alt = "Default plant image";
+    }
   } catch (err) {
     console.error("Fetch error:", err);
-    detailBox.innerHTML = "<p>⚠️ Failed to load plant data.</p>";
+    document.getElementById("plant-detail").innerHTML =
+      "<p>⚠️ Failed to load plant data.</p>";
   }
 });
