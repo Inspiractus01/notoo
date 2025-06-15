@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       imageEl.src = "../../assets/profile/profile-variant1.png";
     };
 
-    // Edit modal logic, delete etc. ... (nechávam bez zmeny)
-
     // --- KOMENTÁRE ---
     const commentList = document.getElementById("comment-list");
     const commentForm = document.getElementById("comment-form-container");
@@ -64,6 +62,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(`${COMMENT_API}?plantId=${id}`);
         if (!res.ok) throw new Error("Failed to fetch comments");
         const comments = await res.json();
+
+        // Debug: log to check data structure
+        console.log("Loaded comments:", comments);
 
         commentList.innerHTML = comments
           .map(
