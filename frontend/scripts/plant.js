@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const plant = await res.json();
 
-    // Fill detail view
+    // Fill plant detail view
     document.getElementById("plant-name").textContent = plant.name;
     document.getElementById("plant-description").textContent =
       plant.description || "N/A";
@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       plant.basic_needs || "N/A";
 
     const imageEl = document.getElementById("plant-image");
-
     if (plant.image && plant.image.startsWith("/db/media")) {
       imageEl.src = `http://localhost:3000${plant.image}`;
     } else if (plant.image) {
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       imageEl.src = "../../assets/profile/profile-variant1.png";
     }
-
     imageEl.onerror = () => {
       imageEl.src = "../../assets/profile/profile-variant1.png";
     };
@@ -57,24 +55,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       loginMsg.classList.remove("hidden");
     }
 
+    function getAvatarFileName(avatarId) {
+      switch (avatarId) {
+        case 1:
+          return "profile-variant1.png";
+        case 2:
+          return "profile-male.png";
+        case 3:
+          return "profile-female.png";
+        default:
+          return "profile-variant1.png";
+      }
+    }
+
     async function loadComments() {
       try {
         const res = await fetch(`${COMMENT_API}?plantId=${id}`);
         if (!res.ok) throw new Error("Failed to fetch comments");
         const comments = await res.json();
 
-        // Debug: log to check data structure
-        console.log("Loaded comments:", comments);
+        // DEBUG: Skontroluj dáta v konzole
+        console.log("Comments loaded:", comments);
 
         commentList.innerHTML = comments
           .map(
             (c) => `
               <div class="comment">
-                <img src="../../assets/profile/${
+                <img src="../../assets/profile/${getAvatarFileName(
                   c.avatarId
-                    ? `profile-variant${c.avatarId}.png`
-                    : "profile-variant1.png"
-                }" alt="Avatar" class="comment-avatar" />
+                )}" alt="Avatar" class="comment-avatar" />
                 <div>
                   <strong>${c.name || "User"}</strong>
                   <p>${c.content}</p>
