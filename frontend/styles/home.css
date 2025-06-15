@@ -76,6 +76,8 @@
   color: #18914a;
 }
 .explore-section {
+  margin: auto;
+
   max-width: 1600px;
   background-color: #2ab96b;
   display: flex;
