@@ -117,6 +117,7 @@
           >← Back to Explore</a
         >
         <h1 id="plant-name">Loading...</h1>
+        <button id="edit-plant-button" class="edit-plant-btn">Edit</button>
         <div class="plant-detail-layout">
           <div class="plant-image-section">
             <img
@@ -141,6 +142,41 @@
               <p id="plant-basic-needs">...</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Edit Plant Modal -->
+      <div id="edit-plant-modal" class="modal hidden">
+        <div class="modal-content green-modal">
+          <span id="close-edit-modal" class="close">&times;</span>
+          <h2>Edit Plant</h2>
+          <form id="edit-plant-form">
+            <label for="edit-description">Description:</label>
+            <textarea id="edit-description" rows="4"></textarea>
+
+            <label for="edit-category">Category:</label>
+            <input type="text" id="edit-category" />
+
+            <label for="edit-basic-needs">Basic Needs:</label>
+            <input type="text" id="edit-basic-needs" />
+
+            <label for="edit-image-url">Image URL:</label>
+            <input
+              type="text"
+              id="edit-image-url"
+              placeholder="Enter image URL"
+            />
+
+            <button
+              type="button"
+              id="delete-image-button"
+              class="button danger-btn"
+            >
+              Delete Image
+            </button>
+
+            <button type="submit" class="button">Save Changes</button>
+          </form>
         </div>
       </div>
     </main>
