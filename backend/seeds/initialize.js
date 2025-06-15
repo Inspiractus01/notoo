@@ -1,4 +1,4 @@
-import { connectDb } from "./db.js";
+import { connectDb } from "../db/db.js";
 
 const start = async () => {
   const db = await connectDb();
