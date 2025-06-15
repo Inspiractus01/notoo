@@ -1,3 +1,10 @@
+/**
+ * Main entry point of the Plant Wiki API server.
+ * Sets up middleware, routes, and starts the Express server.
+ *
+ * @module server
+ */
+
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -23,7 +30,12 @@ app.use("/plants", plantsRoutes);
 app.use("/comments", commentsRoutes);
 app.use("/users", usersRoutes);
 
-// Root endpoint
+/**
+ * Root endpoint for checking server status.
+ * @name GET/
+ * @function
+ * @returns {string} Welcome message.
+ */
 app.get("/", (req, res) => {
   res.send("🌱 Welcome to the Plant Wiki API!");
 });
