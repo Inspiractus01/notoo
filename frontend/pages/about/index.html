@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About – LeafLoop</title>
+    <link rel="stylesheet" href="../../styles/globals.css" />
+    <script src="../../scripts/auth.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <a href="../../index.html" class="navbar-title">LeafLoop</a>
+        <div class="navigation">
+          <a href="../about/index.html" class="active">About</a>
+          <a href="../explore/index.html">Explore</a>
+          <a href="../add-plant/index.html">Add Plant</a>
+          <button id="auth-button" class="button">Login / Register</button>
+          <img
+            id="profile-avatar"
+            class="profile-avatar hidden"
+            src="/assets/profile/profile-variant1.png"
+            alt="Profile"
+          />
+          <span id="user-name" class="user-name hidden"></span>
+        </div>
+      </div>
+
+      <!-- Login/Register Modal -->
+      <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-modal" class="close">&times;</span>
+
+          <div id="form-toggle">
+            <button class="button" id="show-login">Login</button>
+            <button class="button" id="show-register">Register</button>
+          </div>
+
+          <form id="login-form" class="auth-form">
+            <p for="login-name">Name</p>
+            <input
+              type="text"
+              id="login-name"
+              placeholder="Your name"
+              required
+            />
+            <p for="login-password">Password</p>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Your password"
+              required
+            />
+            <button type="submit">Login</button>
+          </form>
+
+          <form id="register-form" class="auth-form hidden">
+            <p for="register-name">Choose a name</p>
+            <input
+              type="text"
+              id="register-name"
+              placeholder="Your name"
+              required
+            />
+            <p for="register-password">Create a password</p>
+            <input
+              type="password"
+              id="register-password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit">Register</button>
+          </form>
+
+          <p id="auth-message"></p>
+        </div>
+      </div>
+
+      <!-- Profile Modal -->
+      <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-profile-modal" class="close">&times;</span>
+          <h2>Edit Profile</h2>
+
+          <div class="avatar-options">
+            <h4>Change profile picture:</h4>
+            <div class="avatar-selection">
+              <img
+                src="../../assets/profile/profile-male.png"
+                data-avatar="1"
+                class="avatar-choice"
+              />
+              <img
+                src="../../assets/profile/profile-female.png"
+                data-avatar="2"
+                class="avatar-choice"
+              />
+              <img
+                src="../../assets/profile/profile-variant1.png"
+                data-avatar="3"
+                class="avatar-choice"
+              />
+            </div>
+          </div>
+
+          <form id="password-form">
+            <h4>Change password:</h4>
+            <input
+              type="password"
+              id="new-password"
+              placeholder="New password"
+              required
+            />
+            <button class="button" type="submit">Update Password</button>
+          </form>
+
+          <button id="logout-button" class="logout-btn">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="greenpage">
+      <div class="content-wrapper">
+        <h1>What is LeafLoop? 🌱</h1>
+        <p>
+          LeafLoop is an open-source plant encyclopedia built by the community,
+          for the community.
+        </p>
+
+        <h2>🌿 How it works</h2>
+        <p>
+          Any user can create an account and start contributing to the database
+          of plants. You can add your favorite plant species, describe their
+          basic care needs, and even upload your own plant photos.
+        </p>
+
+        <p>
+          Once you're logged in, you can leave comments under plant entries —
+          ask questions, share care tips, or connect with other plant lovers.
+        </p>
+
+        <h2>🌍 Why use LeafLoop?</h2>
+        <ul>
+          <li>✨ Discover new plants shared by users around the world</li>
+          <li>
+            📝 Create your own profile and contribute to the knowledge base
+          </li>
+          <li>💬 Leave helpful comments or advice under plant pages</li>
+          <li>📸 Upload images to personalize each plant entry</li>
+          <li>💡 Learn and grow together with the community</li>
+        </ul>
+
+        <h2>👤 Ready to join?</h2>
+        <p>
+          Just click <strong>Register</strong> in the top right corner to get
+          started! Whether you're a seasoned plant expert or just getting
+          started, LeafLoop welcomes you.
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>🌿 LeafLoop &copy; 2025 | Open-source plant encyclopedia</p>
+    </footer>
+  </body>
+</html>
