@@ -14,3 +14,34 @@
 .danger-btn:hover {
   background-color: #c9302c;
 }
+.comments-section {
+  margin-top: 3rem;
+  padding: 1rem;
+  border-top: 2px solid #ccc;
+}
+
+.comment-list {
+  margin-top: 1rem;
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+#comment-input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}

@@ -1,17 +1,33 @@
 import { connectDb } from "../db/db.js";
 
 /**
- * Retrieves all comments or comments for a specific plant from the database.
+ * Retrieves all comments or comments for a specific plant from the database, including user info.
  *
  * @param {number|string} [plantId] - Optional ID of the plant to filter comments.
- * @returns {Promise<Object[]>} Array of comment objects.
+ * @returns {Promise<Object[]>} Array of comment objects with user data.
  */
 export async function getCommentsByPlantIdFromDb(plantId) {
   const db = await connectDb();
   if (plantId) {
-    return await db.all("SELECT * FROM comments WHERE plantId = ?", plantId);
+    return await db.all(
+      `
+      SELECT comments.*, users.name, users.avatarId
+      FROM comments
+      JOIN users ON comments.userId = users.id
+      WHERE comments.plantId = ?
+      ORDER BY comments.createdAt DESC
+    `,
+      plantId
+    );
   }
-  return await db.all("SELECT * FROM comments");
+  return await db.all(
+    `
+    SELECT comments.*, users.name, users.avatarId
+    FROM comments
+    JOIN users ON comments.userId = users.id
+    ORDER BY comments.createdAt DESC
+  `
+  );
 }
 
 /**
