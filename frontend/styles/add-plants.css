@@ -48,3 +48,27 @@
   font-weight: bold;
   color: green;
 }
+/* ✅ Kategórie chip-wrapper */
+.chip-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: -0.5rem; /* zmenšená medzera nad */
+  margin-bottom: 0.5rem; /* jemne pod */
+}
+
+/* ✅ Štýl pre každý chip */
+.chips {
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #3d9970; /* tmavozelená */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chip:hover {
+  background-color: #2e7b59; /* tmavší odtieň pri hover */
+}

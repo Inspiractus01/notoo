@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       categories.forEach((cat) => {
         const chip = document.createElement("button");
-        chip.classList.add("chip");
+        chip.classList.add("chips");
         chip.textContent = cat;
         chip.addEventListener("click", () => {
           categoryInput.value = cat;
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     categories.forEach((cat) => {
       const chip = document.createElement("button");
-      chip.className = "chip";
+      chip.className = "chips";
       chip.textContent = cat;
       chip.addEventListener("click", () => {
         categoryInput.value = cat;

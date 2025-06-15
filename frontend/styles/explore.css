@@ -1,6 +1,7 @@
 .search-wrapper {
   margin: 2rem 0;
   text-align: center;
+  width: 100%;
 }
 
 #search {
