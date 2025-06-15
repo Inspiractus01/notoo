@@ -1,3 +1,13 @@
+/**
+ * Plant Detail Page Script
+ *
+ * Handles fetching and displaying plant details, editing via modal,
+ * uploading and deleting images, deleting the plant,
+ * as well as adding and loading comments.
+ *
+ * @module plant-detail
+ */
+
 const API = "http://localhost:3000/plants";
 const COMMENT_API = "http://localhost:3000/comments";
 
@@ -12,12 +22,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // Načítanie detailov rastliny
+    // ─── LOAD PLANT DETAILS ─────────────────────────────
+
+    /**
+     * Fetches and displays plant details on the page.
+     * Also handles loading the main image and fallbacks.
+     */
     const res = await fetch(`${API}/${id}`);
     if (!res.ok) throw new Error("Plant not found");
     const plant = await res.json();
 
-    // Vyplnenie detailov rastliny
     document.getElementById("plant-name").textContent = plant.name;
     document.getElementById("plant-description").textContent =
       plant.description || "N/A";
@@ -38,7 +52,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       imageEl.src = "../../assets/profile/profile-variant1.png";
     };
 
-    // --- EDIT MODAL ---
+    // ─── EDIT MODAL ─────────────────────────────────────
+
+    /**
+     * Opens edit modal and fills form with current plant data.
+     */
     const editBtn = document.getElementById("edit-plant-button");
     const modal = document.getElementById("edit-plant-modal");
     const closeModal = document.getElementById("close-edit-modal");
@@ -58,6 +76,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       modal.classList.add("hidden");
     });
 
+    /**
+     * Submits the updated plant info and optional image upload.
+     */
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -101,7 +122,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.reload();
     });
 
-    // --- DELETE IMAGE ---
+    // ─── DELETE IMAGE ───────────────────────────────────
+
+    /**
+     * Deletes current plant image (handled by backend).
+     */
     const deleteImageBtn = document.getElementById("delete-image-button");
     deleteImageBtn.addEventListener("click", async () => {
       const confirmed = confirm("Are you sure you want to delete the image?");
@@ -119,7 +144,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    // --- DELETE PLANT ---
+    // ─── DELETE PLANT ───────────────────────────────────
+
+    /**
+     * Deletes the entire plant and redirects user.
+     */
     const deletePlantBtn = document.getElementById("delete-plant-button");
     deletePlantBtn.addEventListener("click", async () => {
       const confirmed = confirm("Are you sure you want to delete this plant?");
@@ -140,13 +169,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    // --- KOMENTÁRE ---
+    // ─── COMMENTS ───────────────────────────────────────
+
     const commentList = document.getElementById("comment-list");
     const commentForm = document.getElementById("comment-form-container");
     const commentInput = document.getElementById("comment-input");
     const submitCommentBtn = document.getElementById("submit-comment");
     const loginMsg = document.getElementById("login-to-comment-msg");
-
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
     if (loggedInUser) {
@@ -157,6 +186,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       loginMsg.classList.remove("hidden");
     }
 
+    /**
+     * Returns avatar file name based on avatar ID.
+     * @param {number} avatarId - Avatar ID number.
+     * @returns {string} Filename of the avatar image.
+     */
     function getAvatarFileName(avatarId) {
       switch (avatarId) {
         case 1:
@@ -170,6 +204,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
+    /**
+     * Loads comments for the current plant and renders them.
+     */
     async function loadComments() {
       try {
         const res = await fetch(`${COMMENT_API}?plantId=${id}`);
@@ -187,8 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <strong>${c.name || "User"}</strong>
                   <p>${c.content}</p>
                 </div>
-              </div>
-            `
+              </div>`
           )
           .join("");
       } catch (err) {
@@ -197,6 +233,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
+    /**
+     * Handles submitting a new comment for the current plant.
+     */
     submitCommentBtn.addEventListener("click", async () => {
       const content = commentInput.value.trim();
       if (!content) return;
@@ -225,7 +264,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     loadComments();
-    // --- END KOMENTÁRE ---
+
+    // ─── END ─────────────────────────────────────────────
   } catch (err) {
     console.error("Fetch error:", err);
     detailBox.innerHTML = "<p>⚠️ Failed to load plant data.</p>";
