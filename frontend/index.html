@@ -16,7 +16,9 @@
           <a href="pages/about/index.html">About</a>
           <a href="pages/explore/index.html">Explore</a>
           <a href="pages/add-plant/index.html">Add Plant</a>
-          <button id="auth-button" class="auth-btn">Login / Register</button>
+          <button class="button" id="auth-button" class="auth-btn">
+            Login / Register
+          </button>
           <img
             id="profile-avatar"
             class="profile-avatar hidden"
@@ -32,21 +34,21 @@
           <span id="close-modal" class="close">&times;</span>
 
           <div id="form-toggle">
-            <button id="show-login">Login</button>
-            <button id="show-register">Register</button>
+            <button class="button" id="show-login">Login</button>
+            <button class="button" id="show-register">Register</button>
           </div>
 
           <!-- LOGIN FORM -->
+
           <form id="login-form" class="auth-form">
-            <h3>Login</h3>
-            <label for="login-name">Name</label>
+            <p for="login-name">Name</p>
             <input
               type="text"
               id="login-name"
               placeholder="Your name"
               required
             />
-            <label for="login-password">Password</label>
+            <p for="login-password">Password</p>
             <input
               type="password"
               id="login-password"
@@ -58,15 +60,15 @@
 
           <!-- REGISTER FORM -->
           <form id="register-form" class="auth-form hidden">
-            <h3>Register</h3>
-            <label for="register-name">Choose a name</label>
+            <p>Register</p>
+            <p for="register-name">Choose a name</p>
             <input
               type="text"
               id="register-name"
               placeholder="Your name"
               required
             />
-            <label for="register-password">Create a password</label>
+            <p for="register-password">Create a password</p>
             <input
               type="password"
               id="register-password"
@@ -118,19 +120,6 @@
           </div>
 
           <form id="password-form">
-            <h4>Change password:</h4>
-            <input
-              type="password"
-              id="new-password"
-              placeholder="New password"
-              required
-            />
-            <button class="explore-button" type="submit">
-              Update Password
-            </button>
-          </form>
-
-          <form id="password-form">
             <p>Change password:</p>
             <input
               type="password"
@@ -138,9 +127,7 @@
               placeholder="New password"
               required
             />
-            <button class="explore-button" type="submit">
-              Update Password
-            </button>
+            <button class="button" type="submit">Update Password</button>
           </form>
 
           <button id="logout-button" class="logout-btn">Logout</button>

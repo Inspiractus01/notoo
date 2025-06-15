@@ -95,6 +95,21 @@ body {
   font-size: var(--font-size-base);
   background-color: var(--color-background);
 }
+.button {
+  background-color: #555555;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: white;
+  color: #2ab96b;
+}
 
 header {
   width: 100%;
@@ -272,10 +287,46 @@ a {
   background-color: #2ab96b;
   color: white;
 }
+.auth-form input {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-text-secondary); /* #363434 */
+  border-radius: 10px;
+  background-color: white;
+  color: var(--color-text-black); /* čierny text */
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
+.auth-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.auth-form input:focus {
+  border-color: #2ab96b; /* tvoje zelené */
+  box-shadow: 0 0 0 3px rgba(42, 185, 107, 0.3);
+}
+
+#profile-modal input {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: 8px;
+  background-color: white;
+  color: var(--color-text-black);
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
 .avatar-options h4,
-#password-form h4 {
+.avatar-options h4 {
   color: white;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+#password-form h4 {
+  color: black;
   margin-bottom: 0.3rem;
   font-size: 1rem;
 }
