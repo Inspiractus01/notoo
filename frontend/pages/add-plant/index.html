@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Plant – LeafLoop</title>
+    <link rel="stylesheet" href="../../styles/globals.css" />
+    <link rel="stylesheet" href="../../styles/add-plant.css" />
+    <script src="../../scripts/auth.js" defer></script>
+    <script src="../../scripts/add-plant.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <a href="../../index.html" class="navbar-title">LeafLoop</a>
+        <div class="navigation">
+          <a href="../about/index.html">About</a>
+          <a href="../explore/index.html">Explore</a>
+          <a href="../add-plant/index.html" class="active">Add Plant</a>
+          <button id="auth-button" class="button">Login / Register</button>
+          <img
+            id="profile-avatar"
+            class="profile-avatar hidden"
+            src="/assets/profile/profile-variant1.png"
+            alt="Profile"
+          />
+          <span id="user-name" class="user-name hidden"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="greenpage">
+      <div class="content-wrapper">
+        <h1>Add a New Plant 🌱</h1>
+        <form
+          id="add-plant-form"
+          enctype="multipart/form-data"
+          class="form-wrapper"
+        >
+          <label for="plant-name">🌿 Plant Name:</label>
+          <input
+            type="text"
+            id="plant-name"
+            name="name"
+            required
+            placeholder="e.g. Monstera Deliciosa"
+          />
+
+          <label for="plant-description"
+            >📝 Description (how the plant looks):</label
+          >
+          <textarea
+            id="plant-description"
+            name="description"
+            rows="4"
+            required
+            placeholder="Describe the plant’s appearance..."
+          ></textarea>
+
+          <label for="plant-category">📁 Category (type of plant):</label>
+          <input
+            type="text"
+            id="plant-category"
+            name="category"
+            required
+            placeholder="e.g. Indoor, Succulent, etc."
+          />
+
+          <label for="plant-basic-needs">💧 Basic Needs (care tips):</label>
+          <input
+            type="text"
+            id="plant-basic-needs"
+            name="basic_needs"
+            required
+            placeholder="Sunlight, watering, soil type..."
+          />
+
+          <label for="plant-image">📷 Image Upload (optional):</label>
+          <input type="file" id="plant-image" name="image" accept="image/*" />
+
+          <button class="button" type="submit">Add Plant</button>
+        </form>
+        <p id="add-message"></p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>🌿 LeafLoop &copy; 2025 | Open-source plant encyclopedia</p>
+    </footer>
+  </body>
+</html>

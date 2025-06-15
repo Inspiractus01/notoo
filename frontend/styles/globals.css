@@ -3,6 +3,7 @@
 @import url("./home.css");
 @import url("./explore.css");
 @import url("./plant.css");
+@import url("./add-plants.css");
 
 * {
   box-sizing: border-box;
